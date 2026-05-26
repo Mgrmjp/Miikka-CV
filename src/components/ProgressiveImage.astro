@@ -18,6 +18,9 @@ const {
   loading = "lazy",
   class: className
 } = Astro.props;
+
+const markLoaded =
+  "this.closest('[data-progressive-image]')?.classList.add('is-loaded')";
 ---
 
 <span class:list={["progressive-image", className]} data-progressive-image>
@@ -38,32 +41,7 @@ const {
     height={height}
     loading={loading}
     decoding="async"
+    onload={markLoaded}
+    onerror={markLoaded}
   />
 </span>
-
-<script>
-  function initProgressiveImages() {
-    document.querySelectorAll("[data-progressive-image]").forEach((wrapper) => {
-      if (wrapper.dataset.progressiveReady === "true") return;
-
-      const full = wrapper.querySelector(".progressive-image__full");
-      if (!(full instanceof HTMLImageElement)) return;
-
-      const markLoaded = () => {
-        wrapper.classList.add("is-loaded");
-        wrapper.dataset.progressiveReady = "true";
-      };
-
-      if (full.complete && full.naturalWidth > 0) {
-        markLoaded();
-        return;
-      }
-
-      full.addEventListener("load", markLoaded, { once: true });
-      full.addEventListener("error", markLoaded, { once: true });
-    });
-  }
-
-  initProgressiveImages();
-  document.addEventListener("astro:page-load", initProgressiveImages);
-</script>

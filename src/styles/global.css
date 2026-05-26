@@ -420,7 +420,7 @@ ol {
 
 /* Hero */
 
-/* Progressive image (blur-up) */
+/* Progressive image (blur-up): full image visible without JS; blur-up when html.progressive-images */
 
 .progressive-image {
   position: relative;
@@ -439,23 +439,39 @@ ol {
 }
 
 .progressive-image__placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.progressive-image__full {
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+}
+
+html.progressive-images .progressive-image:not(.is-loaded) .progressive-image__placeholder {
+  opacity: 1;
   filter: blur(14px);
   transform: scale(1.08);
   transition: opacity 0.45s var(--ease-out);
 }
 
-.progressive-image__full {
-  position: relative;
+html.progressive-images .progressive-image:not(.is-loaded) .progressive-image__full {
   opacity: 0;
   transition: opacity 0.45s var(--ease-out);
 }
 
-.progressive-image.is-loaded .progressive-image__full {
+html.progressive-images .progressive-image.is-loaded .progressive-image__full {
   opacity: 1;
+  transition: opacity 0.45s var(--ease-out);
 }
 
-.progressive-image.is-loaded .progressive-image__placeholder {
+html.progressive-images .progressive-image.is-loaded .progressive-image__placeholder {
   opacity: 0;
+  transition: opacity 0.45s var(--ease-out);
 }
 
 .profile-photo {
@@ -728,16 +744,16 @@ ol {
     transform: none;
   }
 
-  .progressive-image__placeholder,
-  .progressive-image__full {
+  html.progressive-images .progressive-image__placeholder,
+  html.progressive-images .progressive-image__full {
     transition: none;
   }
 
-  .progressive-image__placeholder {
+  html.progressive-images .progressive-image__placeholder {
     display: none;
   }
 
-  .progressive-image__full {
+  html.progressive-images .progressive-image__full {
     opacity: 1;
   }
 }

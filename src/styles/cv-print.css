@@ -41,6 +41,16 @@
   align-items: start;
 }
 
+.page-cv--print .progressive-image__placeholder,
+.cv-print-root .progressive-image__placeholder {
+  display: none;
+}
+
+.page-cv--print .progressive-image__full,
+.cv-print-root .progressive-image__full {
+  opacity: 1;
+}
+
 .page-cv--print .cv-hero__photo.profile-photo {
   width: 6.25rem;
   height: 6.25rem;
