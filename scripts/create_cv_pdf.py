@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
-"""Build public/miikka-makela-cv.pdf — keep in sync with src/data/profile.ts."""
+"""Deprecated: use `npm run cv:pdf` (Playwright + /cv-print). Kept for reference."""
 
 from __future__ import annotations
 
 from pathlib import Path
+from xml.sax.saxutils import escape
 
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_LEFT
+from reportlab.lib.enums import TA_RIGHT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
 from reportlab.platypus import (
-    HRFlowable,
-    ListFlowable,
-    ListItem,
+    PageBreak,
     Paragraph,
     SimpleDocTemplate,
     Spacer,
@@ -21,124 +20,296 @@ from reportlab.platypus import (
     TableStyle,
 )
 
-OUTPUT = Path(__file__).resolve().parent.parent / "public" / "miikka-makela-cv.pdf"
+ROOT = Path(__file__).resolve().parent.parent
+OUTPUT = ROOT / "public" / "miikka-makela-cv.pdf"
 
-ACCENT = colors.HexColor("#8b1528")
-ACCENT_LIGHT = colors.HexColor("#e3b4b8")
+PAGE_WIDTH, _PAGE_HEIGHT = A4
+MARGIN_X = 18 * mm
+CONTENT_WIDTH = PAGE_WIDTH - (2 * MARGIN_X)
+
 INK = colors.HexColor("#0a0a0a")
-MUTED = colors.HexColor("#525252")
-FAINT = colors.HexColor("#737373")
-RULE = colors.HexColor("#dedede")
-SURFACE = colors.HexColor("#f8f8f8")
+TEXT = colors.HexColor("#525252")
+MUTED = colors.HexColor("#737373")
+ACCENT = colors.HexColor("#8b1528")
+BORDER = colors.HexColor("#dedede")
+PAPER = colors.HexColor("#ffffff")
+
+ACCENT_HEX = "#8b1528"
+ACCENT_LINK_HEX = "#8b1528"
 
 NAME = "Miikka Mäkelä"
-TITLE = "Verkkokehittäjä · Full-Stack Care / Huolenpito"
-CONTACT = "Jyväskylä, Suomi  ·  miikka.mla@gmail.com  ·  linkedin.com/in/miikkamgr  ·  github.com/miikkamgr"
+TITLE = "Full stack kehittäjä WordPressin vaikeaan päähän"
+TAGLINE = "Tuotanto · integraatiot · automaatio · liiketoimintakriittinen WordPress"
+INTRO = (
+    "Full stack WordPress-kehittäjä vaativiin verkkopalveluihin. "
+    "Yli viisi vuotta tuotannon WordPress-, WooCommerce- ja integraatiotyötä Into-Digitalin Huolenpidossa."
+)
+LOCATION = "Jyväskylä, Suomi"
+EMAIL = "miikka.mla@gmail.com"
+LINKEDIN_URL = "https://www.linkedin.com/in/miikkamgr/"
+GITHUB_URL = "https://github.com/Mgrmjp"
+
+EXPERIENCES = [
+    {
+        "company": "Into-Digital Oy",
+        "url": "https://into-digital.fi/",
+        "role": "Verkkokehittäjä · Full-Stack Care / Huolenpito",
+        "period": "helmi 2021 –",
+        "location": "Jyväskylä",
+        "bullets": [
+            "Rakennan ja ylläpidän tuotannon WordPress- ja WooCommerce-palveluita ACF:n, WP-CLI:n, LiteSpeedin ja API-integraatioiden kanssa.",
+            "Parannan luotettavuutta staging-käytännöillä, debuggausrutiineilla, automaatioskripteillä ja selkeällä dokumentaatiolla.",
+            "Tuettavia asiakaskriittisiä sivustoja ovat mm. World Vision Suomi, Burger King Suomi ja Plan Suomi.",
+        ],
+    },
+    {
+        "company": "Zaibatsu Interactive Inc.",
+        "url": "https://zaibatsu.fi/",
+        "role": "Harjoittelija · suunnittelu ja kehitys",
+        "period": "syys 2019 – touko 2020",
+        "location": "Jyväskylä",
+        "bullets": [
+            "Aloitin graafisesta suunnittelusta, siirryin 3D-mallinnukseen ja edelleen JavaScript-tehtäviin (Vue, React).",
+            "Askel kohti full stack -työtä ja visuaalista silmää WordPress-projekteissa.",
+        ],
+    },
+]
+
+CLIENTS = [
+    (
+        "World Vision Suomi",
+        "https://www.worldvision.fi/",
+        "Verkkopalvelun ylläpito ja jatkuva kehitys: saavutettavuus, turvallisuus ja toimintavarmuus varainhankinnan tarpeisiin.",
+    ),
+    (
+        "Burger King Suomi",
+        "https://www.burgerking.fi/",
+        "Ylläpito ja kehitys: tuotteet, ravintolat, kampanjat, data, analytiikka ja suorituskyky.",
+    ),
+    (
+        "Plan Suomi",
+        "https://www.plan.fi/",
+        "Päivittäinen ylläpito ja jatkokehitys: tietosisältö, digitaalinen varainhankinta ja luotettava tuotanto.",
+    ),
+]
+
+CASES = [
+    {
+        "title": "Maksu oli onnistunut, mutta vienti ei aina tiennyt sitä",
+        "problem": "Stripe, Gravity Forms ja WP All Export eivät aina kertoneet samaa totuutta ennen kuin raportti ajettiin.",
+        "work": "Selvitin webhook-, merkintä- ja vientiketjun. Rakensin tarkistus- ja korjauslogiikkaa WP-CLI:n kautta.",
+        "result": "Luotettavampi maksudata ja auditoitava polku ilman arvailua.",
+        "tags": ["Stripe", "Gravity Forms", "WP-CLI", "WP All Export"],
+    },
+    {
+        "title": "Paikallinen kehitys hidasti työtä ja rikkoi rytmin",
+        "problem": "Projektin käynnistys ja deploy nojasivat muistiin. Sama virhe toistui Stagingissa.",
+        "work": "Yhtenäistin Lando- ja WP-CLI-työnkulut dry runeilla ja polulla Local → Staging → Tuotanto.",
+        "result": "Nopeampi käynnistys ja vähemmän ympäristöjen välisiä yllätyksiä.",
+        "tags": ["Lando", "WP-CLI", "Docker", "Bitbucket Pipelines"],
+    },
+    {
+        "title": "Varasto katosi vain tiettyyn aikaan",
+        "problem": "Tuotteet hävisivät kieliversioista importin jälkeen tietyllä kellonajalla.",
+        "work": "Jäljitin PIM-, kategoria- ja tag-ristiriidat sekä aikavyöhykelogiikan. Säädin näkyvyyden importin ympärille.",
+        "result": "Selkeä vikapolku ilman uutta arvailukierrosta.",
+        "tags": ["WooCommerce", "WP All Import", "WPML", "PIM"],
+    },
+]
+
+SKILL_GROUPS = [
+    ("Alustat", "WordPress · WooCommerce · Multisite · ACF · Gutenberg · WPML"),
+    ("Integraatiot", "REST ja SOAP · CRM ja PIM · Stripe · Gravity Forms · WP All Import / Export"),
+    ("Automaatio", "WP-CLI · Cron · Export/import · Lando · Docker · CI/CD"),
+    ("Laatu", "Suorituskyky · LiteSpeed · Redis · GA4 · GTM · Consent Mode · tuotantodebuggaus"),
+    ("Työkalut", "Git · Playwright"),
+    ("AI-työnkulut", "AI-avusteinen kehitys · agenttipohjainen koodaus · Cursor · MCP · paikalliset LLM:t"),
+]
+
+PROJECTS = [
+    (
+        "Suomalaiset NHL:ssä",
+        "https://suomalaisetnhlssa.fi/",
+        "NHL-pelaajien live-tilastot virallisista lähteistä.",
+    ),
+    (
+        "Waves Jyväskylä",
+        "https://wavesjyvaskyla.fi/",
+        "Kaksikielinen ravintolasivusto Jyväskylän satamassa.",
+    ),
+    (
+        "Lukko kokoonpano",
+        "https://lukkokokoonpano.koubou.eu/",
+        "Liiga-fanityökalu kokoonpanoihin ja erikoistilanteisiin.",
+    ),
+]
+
+EDUCATION = [
+    ("Insinööri (AMK), mediatekniikka / ICT", "JAMK · 2016 – 2020"),
+    ("Ylioppilas", "Vammalan lukio"),
+    ("Varusmiespalvelus", "Niinisalo"),
+]
+
+LANGUAGES = [
+    ("Suomi", "Äidinkieli"),
+    ("Englanti", "Ammattitaitoinen työkieli"),
+    ("Ruotsi", "Perustaso, työn alla"),
+]
+
+INTERESTS = (
+    "3D-tulostus · paikalliset LLM:t · musiikki (myös AI:n avulla) · tekniikka · botaniikka. "
+    "Musiikki inspiroi; soittimen opetteluun ei juuri nyt riitä aikaa."
+)
+
+
+def mark(text: str) -> str:
+    return escape(text)
+
+
+def linked(text: str, href: str) -> str:
+    return f'<link href="{href}" color="{ACCENT_LINK_HEX}">{mark(text)}</link>'
 
 
 def build_styles() -> dict[str, ParagraphStyle]:
     base = getSampleStyleSheet()
     return {
-        "header_name": ParagraphStyle(
-            "HeaderName",
+        "eyebrow": ParagraphStyle(
+            "Eyebrow",
+            parent=base["Normal"],
+            fontName="Helvetica-Bold",
+            fontSize=7.5,
+            leading=9,
+            textColor=MUTED,
+            spaceAfter=2,
+            letterSpacing=0.6,
+        ),
+        "name": ParagraphStyle(
+            "Name",
             parent=base["Normal"],
             fontName="Helvetica-Bold",
             fontSize=22,
             leading=26,
-            textColor=colors.white,
+            textColor=INK,
             spaceAfter=2,
         ),
-        "header_role": ParagraphStyle(
-            "HeaderRole",
+        "title": ParagraphStyle(
+            "Title",
             parent=base["Normal"],
-            fontName="Helvetica",
+            fontName="Helvetica-Bold",
             fontSize=11,
             leading=14,
-            textColor=colors.HexColor("#f5e6e8"),
+            textColor=ACCENT,
             spaceAfter=6,
         ),
-        "header_contact": ParagraphStyle(
-            "HeaderContact",
+        "intro": ParagraphStyle(
+            "Intro",
             parent=base["Normal"],
             fontName="Helvetica",
-            fontSize=8.5,
+            fontSize=9.2,
+            leading=13.2,
+            textColor=TEXT,
+            spaceAfter=4,
+        ),
+        "contact": ParagraphStyle(
+            "Contact",
+            parent=base["Normal"],
+            fontName="Helvetica",
+            fontSize=8.4,
             leading=11,
-            textColor=colors.HexColor("#f0d4d8"),
+            textColor=MUTED,
         ),
         "section": ParagraphStyle(
             "Section",
             parent=base["Normal"],
             fontName="Helvetica-Bold",
-            fontSize=11.5,
-            leading=14,
+            fontSize=8,
+            leading=10,
             textColor=ACCENT,
-            spaceBefore=14,
-            spaceAfter=4,
+            spaceBefore=10,
+            spaceAfter=5,
         ),
-        "job_title": ParagraphStyle(
-            "JobTitle",
+        "company": ParagraphStyle(
+            "Company",
             parent=base["Normal"],
             fontName="Helvetica-Bold",
-            fontSize=10.5,
+            fontSize=11,
             leading=13,
             textColor=INK,
-            spaceBefore=8,
             spaceAfter=1,
         ),
-        "job_meta": ParagraphStyle(
-            "JobMeta",
+        "meta": ParagraphStyle(
+            "Meta",
             parent=base["Normal"],
-            fontName="Helvetica-Oblique",
-            fontSize=9,
-            leading=12,
-            textColor=FAINT,
+            fontName="Helvetica",
+            fontSize=8.3,
+            leading=10.5,
+            textColor=MUTED,
             spaceAfter=4,
         ),
         "body": ParagraphStyle(
             "Body",
             parent=base["Normal"],
             fontName="Helvetica",
-            fontSize=9.5,
-            leading=13.5,
-            textColor=MUTED,
-            spaceAfter=6,
+            fontSize=8.8,
+            leading=12.5,
+            textColor=TEXT,
+            spaceAfter=3,
+            leftIndent=0,
         ),
-        "body_tight": ParagraphStyle(
-            "BodyTight",
+        "bullet": ParagraphStyle(
+            "Bullet",
             parent=base["Normal"],
             fontName="Helvetica",
-            fontSize=9.5,
-            leading=13,
+            fontSize=8.8,
+            leading=12.2,
+            textColor=TEXT,
+            spaceAfter=2,
+            leftIndent=10,
+            bulletIndent=0,
+            firstLineIndent=-6,
+        ),
+        "case_meta": ParagraphStyle(
+            "CaseMeta",
+            parent=base["Normal"],
+            fontName="Helvetica",
+            fontSize=7.5,
+            leading=9.5,
             textColor=MUTED,
-            spaceAfter=3,
-        ),
-        "label": ParagraphStyle(
-            "Label",
-            parent=base["Normal"],
-            fontName="Helvetica-Bold",
-            fontSize=9,
-            leading=12,
-            textColor=INK,
-        ),
-        "client": ParagraphStyle(
-            "Client",
-            parent=base["Normal"],
-            fontName="Helvetica-Bold",
-            fontSize=9.5,
-            leading=12,
-            textColor=INK,
-            spaceBefore=5,
-            spaceAfter=1,
+            spaceAfter=2,
         ),
         "case_title": ParagraphStyle(
             "CaseTitle",
             parent=base["Normal"],
             fontName="Helvetica-Bold",
-            fontSize=9.5,
+            fontSize=9.8,
             leading=12,
             textColor=INK,
-            spaceBefore=7,
+            spaceAfter=4,
+        ),
+        "case_row": ParagraphStyle(
+            "CaseRow",
+            parent=base["Normal"],
+            fontName="Helvetica",
+            fontSize=8.2,
+            leading=11.5,
+            textColor=TEXT,
             spaceAfter=2,
+        ),
+        "skill_label": ParagraphStyle(
+            "SkillLabel",
+            parent=base["Normal"],
+            fontName="Helvetica-Bold",
+            fontSize=8.4,
+            leading=10.5,
+            textColor=INK,
+        ),
+        "skill_items": ParagraphStyle(
+            "SkillItems",
+            parent=base["Normal"],
+            fontName="Helvetica",
+            fontSize=8.2,
+            leading=11.2,
+            textColor=TEXT,
         ),
         "footer": ParagraphStyle(
             "Footer",
@@ -146,24 +317,19 @@ def build_styles() -> dict[str, ParagraphStyle]:
             fontName="Helvetica",
             fontSize=7.5,
             leading=9,
-            textColor=FAINT,
-            alignment=TA_LEFT,
+            textColor=MUTED,
+            alignment=TA_RIGHT,
         ),
     }
 
 
-def header_block(styles: dict[str, ParagraphStyle]) -> Table:
-    inner = Table(
-        [
-            [Paragraph(NAME, styles["header_name"])],
-            [Paragraph(TITLE, styles["header_role"])],
-            [Paragraph(CONTACT, styles["header_contact"])],
-        ],
-        colWidths=[170 * mm],
-    )
-    inner.setStyle(
+def rule(width: float = CONTENT_WIDTH, thickness: float = 0.5) -> Table:
+    table = Table([[""]], colWidths=[width], rowHeights=[0.1])
+    table.hAlign = "LEFT"
+    table.setStyle(
         TableStyle(
             [
+                ("LINEABOVE", (0, 0), (-1, -1), thickness, BORDER),
                 ("LEFTPADDING", (0, 0), (-1, -1), 0),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 0),
                 ("TOPPADDING", (0, 0), (-1, -1), 0),
@@ -171,226 +337,210 @@ def header_block(styles: dict[str, ParagraphStyle]) -> Table:
             ]
         )
     )
-    outer = Table([[inner]], colWidths=[170 * mm])
-    outer.setStyle(
+    return table
+
+
+def accent_rule() -> Table:
+    table = Table([[""]], colWidths=[CONTENT_WIDTH], rowHeights=[0.1])
+    table.hAlign = "LEFT"
+    table.setStyle(
         TableStyle(
             [
-                ("BACKGROUND", (0, 0), (-1, -1), ACCENT),
-                ("LEFTPADDING", (0, 0), (-1, -1), 18),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 18),
-                ("TOPPADDING", (0, 0), (-1, -1), 16),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 14),
-                ("ROUNDEDCORNERS", [4, 4, 0, 0]),
+                ("LINEABOVE", (0, 0), (-1, -1), 2.2, ACCENT),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
             ]
         )
     )
-    return outer
+    return table
 
 
-def section_rule() -> HRFlowable:
-    return HRFlowable(width="100%", thickness=0.6, color=ACCENT_LIGHT, spaceBefore=0, spaceAfter=6)
+def section(title: str, styles: dict[str, ParagraphStyle]) -> list:
+    return [Paragraph(mark(title.upper()), styles["section"]), rule(thickness=0.4)]
 
 
-def bullet_list(items: list[str], styles: dict[str, ParagraphStyle]) -> ListFlowable:
-    return ListFlowable(
-        [ListItem(Paragraph(text, styles["body_tight"]), leftIndent=12) for text in items],
-        bulletType="bullet",
-        bulletFontName="Helvetica",
-        bulletFontSize=8,
-        bulletColor=ACCENT,
-        start="•",
-        leftIndent=14,
+def bullets(items: list[str], styles: dict[str, ParagraphStyle]) -> list:
+    return [Paragraph(f"• {mark(item)}", styles["bullet"]) for item in items]
+
+
+def job_block(job: dict, styles: dict[str, ParagraphStyle]) -> list:
+    return [
+        Paragraph(linked(job["company"], job["url"]), styles["company"]),
+        Paragraph(f'{mark(job["role"])} · {mark(job["period"])} · {mark(job["location"])}', styles["meta"]),
+        *bullets(job["bullets"], styles),
+        Spacer(1, 5),
+    ]
+
+
+def case_block(case: dict, index: int, styles: dict[str, ParagraphStyle]) -> list:
+    tags = mark(" · ".join(case["tags"]))
+    rows = [
+        Paragraph(
+            f'<font color="{ACCENT_HEX}"><b>Case {index:02}</b></font> · {tags}',
+            styles["case_meta"],
+        ),
+        Paragraph(mark(case["title"]), styles["case_title"]),
+        Paragraph(f'<b>Ongelma</b> · {mark(case["problem"])}', styles["case_row"]),
+        Paragraph(f'<b>Mitä tein</b> · {mark(case["work"])}', styles["case_row"]),
+        Paragraph(f'<b>Lopputulos</b> · {mark(case["result"])}', styles["case_row"]),
+        Spacer(1, 5),
+    ]
+    return rows
+
+
+def skills_table(styles: dict[str, ParagraphStyle]) -> Table:
+    rows = [
+        [
+            Paragraph(mark(label), styles["skill_label"]),
+            Paragraph(mark(items), styles["skill_items"]),
+        ]
+        for label, items in SKILL_GROUPS
+    ]
+    table = Table(rows, colWidths=[28 * mm, CONTENT_WIDTH - 28 * mm])
+    table.setStyle(
+        TableStyle(
+            [
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 3),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LINEBELOW", (0, 0), (-1, -2), 0.25, BORDER),
+            ]
+        )
     )
+    return table
 
 
-def section_heading(title: str, styles: dict[str, ParagraphStyle]) -> list:
-    return [Paragraph(title, styles["section"]), section_rule()]
+def two_column_block(left: list, right: list, styles: dict[str, ParagraphStyle]) -> Table:
+    table = Table([[left, right]], colWidths=[CONTENT_WIDTH / 2, CONTENT_WIDTH / 2])
+    table.setStyle(
+        TableStyle(
+            [
+                ("LEFTPADDING", (0, 0), (0, 0), 0),
+                ("RIGHTPADDING", (0, 0), (0, 0), 8),
+                ("LEFTPADDING", (1, 0), (1, 0), 8),
+                ("RIGHTPADDING", (1, 0), (1, 0), 0),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ]
+        )
+    )
+    return table
+
+
+def page_canvas(canvas, doc) -> None:
+    canvas.saveState()
+    canvas.setFillColor(PAPER)
+    canvas.rect(0, 0, PAGE_WIDTH, _PAGE_HEIGHT, stroke=0, fill=1)
+    canvas.setFillColor(ACCENT)
+    canvas.rect(0, _PAGE_HEIGHT - 3 * mm, PAGE_WIDTH, 3 * mm, stroke=0, fill=1)
+    canvas.setFont("Helvetica", 7.2)
+    canvas.setFillColor(MUTED)
+    canvas.drawRightString(PAGE_WIDTH - MARGIN_X, 10 * mm, f"{NAME} · {canvas.getPageNumber()}/2")
+    canvas.restoreState()
 
 
 def build_story() -> list:
-    s = build_styles()
-    story: list = []
-
-    story.append(header_block(s))
-    story.append(Spacer(1, 10 * mm))
-
-    story.extend(section_heading("Profiili", s))
-    story.append(
-        Paragraph(
-            "Mediatekniikan insinööri (JAMK). Autan rakentamaan WordPress-kokonaisuuksia, "
-            "joissa suorituskyky, integraatiot ja mitattava hyöty kulkevat käsi kädessä.",
-            s["body"],
-        )
-    )
-    story.append(
-        Paragraph(
-            "Yli viisi vuotta Into-Digitalin Huolenpidossa: WordPress, WooCommerce, ACF, "
-            "WP-CLI, integraatiot, analytiikka ja tekninen ylläpito. Uusi ei pelota — "
-            "dokumentoin niin, että seuraavalla tekijällä on helpompaa.",
-            s["body"],
-        )
+    styles = build_styles()
+    contact = (
+        f'{linked(EMAIL, f"mailto:{EMAIL}")} · '
+        f'{linked("LinkedIn", LINKEDIN_URL)} · '
+        f'{linked("GitHub", GITHUB_URL)} · '
+        f"{mark(LOCATION)}"
     )
 
-    story.extend(section_heading("Kokemus", s))
-
-    story.append(Paragraph("Into-Digital Oy", s["job_title"]))
-    story.append(
-        Paragraph(
-            "Verkkokehittäjä · Full-Stack Care / Huolenpito  ·  helmi 2021 –  ·  Jyväskylä",
-            s["job_meta"],
-        )
-    )
-    story.append(
-        bullet_list(
-            [
-                "WordPress- ja WooCommerce-sivustot, ACF, Vue, WP-CLI, LiteSpeed ja API-integraatiot.",
-                "Huolenpito: turvallisuus, suorituskyky, WP-CLI-skriptit ja omat lisäosat.",
-                "Asiakkaat mm. World Vision Suomi, Burger King Suomi, Plan Suomi — ylläpito ja tuotantodebuggaus.",
-                "Selvitän, miksi jokin toimii vain stagingissa, ja vien projektia käytännössä eteenpäin.",
-            ],
-            s,
-        )
-    )
-
-    story.append(Paragraph("Zaibatsu Interactive Inc.", s["job_title"]))
-    story.append(
-        Paragraph("Graafikon harjoittelija  ·  syys 2019 – touko 2020  ·  Jyväskylä", s["job_meta"])
-    )
-    story.append(
-        bullet_list(
-            [
-                "Graafinen suunnittelu, 3D-mallinnus ja JavaScript (Vue, React).",
-                "Askel kohti full stack -työtä ja visuaalista silmää WordPress-projekteissa.",
-            ],
-            s,
-        )
-    )
-
-    story.extend(section_heading("Asiakastyötä", s))
-    clients = [
-        ("World Vision Suomi", "Verkkopalvelun ylläpito ja kehitys: saavutettavuus, turvallisuus ja toimintavarmuus."),
-        ("Burger King Suomi", "Sivuston ylläpito: tuotteet, ravintolat, kampanjat, data ja analytiikka."),
-        ("Plan Suomi", "Ylläpito ja jatkokehitys: tietosisältö, varainhankinta ja WordPress-tuotanto."),
+    page_one: list = [
+        accent_rule(),
+        Spacer(1, 8),
+        Paragraph(mark(TAGLINE), styles["eyebrow"]),
+        Paragraph(NAME, styles["name"]),
+        Paragraph(mark(TITLE), styles["title"]),
+        Paragraph(mark(INTRO), styles["intro"]),
+        Paragraph(contact, styles["contact"]),
+        Spacer(1, 4),
+        *section("Kokemus", styles),
+        *[block for job in EXPERIENCES for block in job_block(job, styles)],
+        *section("Asiakastyötä", styles),
     ]
-    for name, desc in clients:
-        story.append(Paragraph(f"<b>{name}</b> — {desc}", s["body_tight"]))
 
-    story.extend(section_heading("Omat projektit", s))
-    projects = [
-        ("suomalaisetnhlssa.fi", "Suomalaisten NHL-pelaajien tilastot NHL:n virallisista lähteistä."),
-        ("wavesjyvaskyla.fi", "Waves-konttiravintola Jyväskylässä — kaksikielinen sivusto (fi/en)."),
-        ("lukkokokoonpano.koubou.eu", "Rauman Lukon Liiga-kokoonpanotyökalu fanikäyttöön."),
-    ]
-    for host, desc in projects:
-        story.append(Paragraph(f"<b>{host}</b> — {desc}", s["body_tight"]))
+    for name, url, summary in CLIENTS:
+        page_one.extend(
+            [
+                Paragraph(linked(name, url), styles["company"]),
+                Paragraph(mark(summary), styles["body"]),
+                Spacer(1, 3),
+            ]
+        )
 
-    story.extend(section_heading("Taidot", s))
-    skills_box = Table(
+    page_one.extend(
         [
-            [
-                Paragraph(
-                    "WordPress · WooCommerce · PHP · ACF · Gutenberg · WP-CLI · Vue.js · JavaScript · "
-                    "REST · SOAP · WPML · Polylang · LiteSpeed · Redis · Lando · Docker · GA4 · GTM · "
-                    "Consent Mode · Playwright · automaatio · suorituskyky",
-                    ParagraphStyle(
-                        "Skills",
-                        fontName="Helvetica",
-                        fontSize=9,
-                        leading=12.5,
-                        textColor=MUTED,
-                    ),
-                )
-            ]
-        ],
-        colWidths=[170 * mm],
+            *section("Tekniset työnäytteet", styles),
+            *[block for i, case in enumerate(CASES[:2], start=1) for block in case_block(case, i, styles)],
+            PageBreak(),
+        ]
     )
-    skills_box.setStyle(
-        TableStyle(
-            [
-                ("BACKGROUND", (0, 0), (-1, -1), SURFACE),
-                ("BOX", (0, 0), (-1, -1), 0.5, ACCENT_LIGHT),
-                ("LEFTPADDING", (0, 0), (-1, -1), 10),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 10),
-                ("TOPPADDING", (0, 0), (-1, -1), 8),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
-            ]
-        )
-    )
-    story.append(skills_box)
 
-    story.extend(section_heading("Tekniset työnäytteet", s))
-    cases = [
-        (
-            "Lando + WP-CLI — ympäristöputki",
-            "Manuaalinen synkkaus toisti samat virheet stagingissa.",
-            "Lando-pohjainen putki: dry run, varmuuskopiot, URL-korvaukset, polku local → staging → tuotanto.",
-            "Vähemmän säätöä ja nopeampi debuggaus.",
-        ),
-        (
-            "Stripe + Gravity Forms — maksusynkronointi",
-            "Maksustatukset eivät ehtineet mukaan ennen vientiä.",
-            "Yhtenäinen Stripe-laskulogiikka, audit-metadata ja WP-CLI-rekonsiliointi.",
-            "Luotettavampi maksudata ja auditoitava polku.",
-        ),
-        (
-            "WooCommerce + WPML — varasto ja aikavyöhyke",
-            "Tuotteet katosivat kieliversioista importin jälkeen tietyllä kellonajalla.",
-            "PIM/kategoria/tag-ristiriidat ja EN/DE/FI-näkyvyyslogiikan korjaus.",
-            "Selkeä vikapolku ilman arvailua.",
-        ),
+    page_two: list = [
+        Paragraph(NAME, ParagraphStyle("CompactName", parent=styles["name"], fontSize=14, spaceAfter=2)),
+        Paragraph(contact, styles["contact"]),
+        Spacer(1, 6),
+        rule(),
+        Spacer(1, 6),
+        *case_block(CASES[2], 3, styles),
+        *section("Taidot", styles),
+        skills_table(styles),
+        Spacer(1, 6),
+        *section("Omat projektit", styles),
     ]
-    for title, problem, work, result in cases:
-        story.append(Paragraph(title, s["case_title"]))
-        story.append(Paragraph(f"<b>Ongelma.</b> {problem}", s["body_tight"]))
-        story.append(Paragraph(f"<b>Työ.</b> {work}", s["body_tight"]))
-        story.append(Paragraph(f"<b>Lopputulos.</b> {result}", s["body_tight"]))
 
-    story.extend(section_heading("Koulutus", s))
-    story.append(
-        Paragraph(
-            "<b>Jyväskylän ammattikorkeakoulu (JAMK)</b> — Insinööri (AMK), mediatekniikka · 2016 – 2020",
-            s["body"],
+    for name, url, summary in PROJECTS:
+        page_two.extend(
+            [
+                Paragraph(f'{linked(name, url)} · {mark(summary)}', styles["body"]),
+            ]
         )
+
+    education_col = [
+        Paragraph(mark("Koulutus"), styles["section"]),
+        rule(thickness=0.4),
+    ]
+    for title, org in EDUCATION:
+        education_col.append(Paragraph(f"<b>{mark(title)}</b><br/>{mark(org)}", styles["body"]))
+
+    languages_col = [
+        Paragraph(mark("Kielet"), styles["section"]),
+        rule(thickness=0.4),
+    ]
+    for name, level in LANGUAGES:
+        languages_col.append(Paragraph(f"<b>{mark(name)}</b> · {mark(level)}", styles["body"]))
+
+    page_two.extend(
+        [
+            Spacer(1, 6),
+            two_column_block(education_col, languages_col, styles),
+            Spacer(1, 6),
+            *section("Kiinnostuksen kohteet", styles),
+            Paragraph(mark(INTERESTS), styles["body"]),
+        ]
     )
 
-    story.extend(section_heading("Kiinnostuksen kohteet & kielet", s))
-    story.append(
-        Paragraph(
-            "3D-tulostus · paikalliset LLM:t · tekniikka · botaniikka · seuraava projekti aina suunnitteilla.",
-            s["body_tight"],
-        )
-    )
-    story.append(
-        Paragraph("Suomi — äidinkieli  ·  Englanti — ammattitaitoinen työkieli", s["body"])
-    )
-
-    return story
-
-
-def add_page_footer(canvas, doc) -> None:
-    canvas.saveState()
-    canvas.setStrokeColor(RULE)
-    canvas.setLineWidth(0.4)
-    canvas.line(20 * mm, 14 * mm, 190 * mm, 14 * mm)
-    canvas.setFont("Helvetica", 7.5)
-    canvas.setFillColor(FAINT)
-    canvas.drawString(20 * mm, 9 * mm, NAME)
-    canvas.drawRightString(190 * mm, 9 * mm, f"Sivu {canvas.getPageNumber()}")
-    canvas.restoreState()
+    return page_one + page_two
 
 
 def write_pdf() -> None:
     doc = SimpleDocTemplate(
         str(OUTPUT),
         pagesize=A4,
-        leftMargin=20 * mm,
-        rightMargin=20 * mm,
-        topMargin=16 * mm,
-        bottomMargin=20 * mm,
-        title=f"{NAME} — CV",
+        leftMargin=MARGIN_X,
+        rightMargin=MARGIN_X,
+        topMargin=14 * mm,
+        bottomMargin=14 * mm,
+        title=f"{NAME} | Ansioluettelo",
         author=NAME,
     )
-    doc.build(build_story(), onFirstPage=add_page_footer, onLaterPages=add_page_footer)
+    doc.build(build_story(), onFirstPage=page_canvas, onLaterPages=page_canvas)
     print(f"Wrote {OUTPUT}")
 
 

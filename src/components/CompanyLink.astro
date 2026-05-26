@@ -1,0 +1,20 @@
+---
+import ExternalLinkIcon from "./ExternalLinkIcon.astro";
+import NewWindowHint from "./NewWindowHint.astro";
+
+type Props = {
+  name: string;
+  url: string;
+  class?: string;
+};
+
+const { name, url, class: className } = Astro.props;
+---
+
+<h3 class:list={[className]}>
+  <a class="company-link link-external" href={url} rel="noopener noreferrer" target="_blank">
+    {name}
+    <NewWindowHint />
+    <ExternalLinkIcon />
+  </a>
+</h3>

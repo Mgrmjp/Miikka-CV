@@ -12,6 +12,27 @@ const {
   title = profile.metaTitle,
   description = profile.metaDescription
 } = Astro.props;
+
+const { latitude, longitude } = profile.coordinates;
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  jobTitle: profile.title,
+  email: profile.email,
+  url: Astro.site?.toString(),
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Jyväskylä",
+    addressCountry: "FI"
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude,
+    longitude
+  },
+  sameAs: [profile.linkedin, profile.github]
+};
 ---
 
 <!doctype html>
@@ -31,7 +52,7 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&display=swap"
       rel="stylesheet"
     />
 
@@ -41,6 +62,11 @@ const {
     <meta property="og:url" content={Astro.site?.toString()} />
     <meta property="og:image" content={new URL(profile.avatar, Astro.site).toString()} />
     <meta name="twitter:card" content="summary" />
+    <meta name="geo.region" content="FI-08" />
+    <meta name="geo.placename" content="Jyväskylä" />
+    <meta name="geo.position" content={`${latitude};${longitude}`} />
+    <meta name="ICBM" content={`${latitude}, ${longitude}`} />
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
   </head>
   <body>
     <a class="skip-link" href="#main">Siirry sisältöön</a>

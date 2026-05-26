@@ -13,7 +13,7 @@ const { index, title, mess, work, outcome, tags } = Astro.props;
 
 <article class="story-card card">
   <div class="story-card__head">
-    <span class="story-card__index">{index}</span>
+    <span class="story-card__index">Case {index}</span>
     <ul class="tag-row" aria-label="Työkalut">
       {tags.map((tag) => <li>{tag}</li>)}
     </ul>
@@ -25,11 +25,11 @@ const { index, title, mess, work, outcome, tags } = Astro.props;
       <dd>{mess}</dd>
     </div>
     <div>
-      <dt>Mitä tein</dt>
+      <dt>Toimenpide</dt>
       <dd>{work}</dd>
     </div>
     <div>
-      <dt>Lopputulos</dt>
+      <dt>Tulos</dt>
       <dd>{outcome}</dd>
     </div>
   </dl>

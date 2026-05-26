@@ -1,0 +1,19 @@
+---
+import Coordinates from "./Coordinates.astro";
+import { quickFacts } from "../data/profile";
+---
+
+<aside class="quick-facts card" aria-label={quickFacts.label}>
+  <p class="eyebrow">{quickFacts.label}</p>
+  <p class="quick-facts__role">{quickFacts.role}</p>
+  <p class="quick-facts__body">{quickFacts.body}</p>
+  <p class="quick-facts__strength">{quickFacts.strength}</p>
+  <ul class="quick-facts__meta">
+    <li>{quickFacts.age}</li>
+    <li>{quickFacts.tenure}</li>
+    <li class="quick-facts__location">
+      {quickFacts.location}
+      <Coordinates class="quick-facts__coordinates" />
+    </li>
+  </ul>
+</aside>

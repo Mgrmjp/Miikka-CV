@@ -1,0 +1,19 @@
+---
+import { proofPoints, proofStrip } from "../data/profile";
+---
+
+<section class="proof-strip" aria-labelledby="proof-strip-label">
+  <div class="container">
+    <h2 id="proof-strip-label" class="proof-strip__label eyebrow">
+      {proofStrip.label}
+    </h2>
+    <p class="proof-strip__lead">{proofStrip.lead}</p>
+    <ul class="proof-strip__inner">
+      {
+        proofPoints.map((item) => (
+          <li class="proof-strip__item">{item}</li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

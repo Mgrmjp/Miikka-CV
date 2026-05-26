@@ -1,0 +1,157 @@
+/* Print/PDF view: /cv-print */
+
+.cv-print-root {
+  margin: 0;
+  background: #ececec;
+  color: var(--color-ink);
+}
+
+.cv-print-root body {
+  margin: 0;
+  background: #ececec;
+}
+
+.cv-print-sheet {
+  box-sizing: border-box;
+  width: min(100%, 210mm);
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 12mm 14mm 16mm;
+  background: #fff;
+  box-shadow: 0 2px 24px rgb(0 0 0 / 8%);
+}
+
+.page-cv--print {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+
+/* Keep hero (incl. portrait) off page breaks; drop heavy shadows that clip in PDF */
+.page-cv--print .cv-hero,
+.page-cv--print .cv-hero__layout {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.page-cv--print .cv-hero__layout {
+  display: grid;
+  grid-template-columns: 6.25rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.page-cv--print .cv-hero__photo.profile-photo {
+  width: 6.25rem;
+  height: 6.25rem;
+  flex-shrink: 0;
+  box-shadow: none;
+  outline: none;
+  border: 2px solid rgb(110 31 46 / 18%);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.page-cv--print .cv-hero h1 {
+  margin-top: 0.2rem;
+  font-size: 1.65rem;
+}
+
+.page-cv--print .cv-hero__intro {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.page-cv--print .cv-job.card,
+.page-cv--print .cv-client.card,
+.page-cv--print .cv-project.card,
+.page-cv--print .cv-case.card,
+.page-cv--print .cv-education.card {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.page-cv--print .cv-block {
+  margin-top: 1.35rem;
+  padding-top: 1.35rem;
+}
+
+.page-cv--print .cv-block:first-of-type {
+  margin-top: 1rem;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.page-cv--print .cv-hero__contact-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.15rem 0.35rem;
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.page-cv--print .cv-hero__contact-line a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.page-cv--print .cv-case.card {
+  border-left-width: 2px;
+  box-shadow: none;
+}
+
+.page-cv--print .card {
+  box-shadow: none;
+}
+
+.page-cv--print .card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.page-cv--print .skill-groups--compact .skill-group {
+  break-inside: avoid;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm 14mm;
+  }
+
+  .cv-print-root {
+    background: #fff;
+  }
+
+  .cv-print-sheet {
+    width: auto;
+    min-height: auto;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .page-cv--print .cv-block {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .page-cv--print .cv-cases {
+    grid-template-columns: 1fr;
+  }
+
+  .page-cv--print .cv-case:first-child {
+    grid-column: auto;
+  }
+
+  .page-cv--print .cv-case__details {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border);
+  }
+}

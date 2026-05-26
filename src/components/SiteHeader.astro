@@ -1,13 +1,32 @@
 ---
+import ExternalLinkIcon from "./ExternalLinkIcon.astro";
+import NewWindowHint from "./NewWindowHint.astro";
 import { profile } from "../data/profile";
 
 type Props = {
   navItems: readonly { href: string; label: string; download?: boolean }[];
   ctaHref?: string;
   ctaLabel?: string;
+  ctaVariant?: "primary" | "secondary";
 };
 
-const { navItems, ctaHref = "#yhteys", ctaLabel = "Ota yhteyttä" } = Astro.props;
+const {
+  navItems,
+  ctaHref = "#yhteys",
+  ctaLabel = "Ota yhteyttä",
+  ctaVariant = "primary"
+} = Astro.props;
+
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+function isNavActive(href: string, download?: boolean) {
+  if (download || href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto:")) {
+    return false;
+  }
+  const target = href.replace(/\/$/, "") || "/";
+  if (pathname === target) return true;
+  return target === "/cv" && pathname === "/ansioluettelo";
+}
 ---
 
 <header class="site-header">
@@ -26,19 +45,40 @@ const { navItems, ctaHref = "#yhteys", ctaLabel = "Ota yhteyttä" } = Astro.prop
 
     <nav class="site-nav" aria-label="Päävalikko">
       {
-        navItems.map((item) => (
-          <a
-            href={item.href}
-            {...item.download ? { download: true } : {}}
-            {...item.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {}}
-          >
-            {item.label}
-          </a>
-        ))
+        navItems.map((item) => {
+          const isExternal = item.href.startsWith("http");
+          const active = isNavActive(item.href, item.download);
+          return (
+            <a
+              class:list={[isExternal && "link-external", active && "is-active"]}
+              href={item.href}
+              {...active ? { "aria-current": "page" } : {}}
+              {...item.download ? { download: true } : {}}
+              {...isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {}}
+            >
+              {item.label}
+              {isExternal ? (
+                <>
+                  <NewWindowHint />
+                  <ExternalLinkIcon />
+                </>
+              ) : null}
+            </a>
+          );
+        })
       }
     </nav>
 
-    <a class="btn btn--primary btn--sm site-header__cta" href={ctaHref}>
+    <a
+      class:list={[
+        "btn",
+        "btn--sm",
+        "site-header__cta",
+        ctaVariant === "primary" && "btn--primary",
+        ctaVariant === "secondary" && "btn--secondary"
+      ]}
+      href={ctaHref}
+    >
       {ctaLabel}
     </a>
   </div>

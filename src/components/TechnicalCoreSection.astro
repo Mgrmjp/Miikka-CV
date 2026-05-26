@@ -1,0 +1,18 @@
+---
+import SkillGroups from "./SkillGroups.astro";
+import { technicalCore, technicalSkillGroups } from "../data/profile";
+---
+
+<section class="proof-strip proof-strip--technical" aria-labelledby="technical-core-label">
+  <div class="container">
+    <div class="technical-panel">
+      <div class="technical-panel__head">
+        <h2 id="technical-core-label" class="technical-panel__title">
+          {technicalCore.label}
+        </h2>
+        <p class="technical-panel__intro">{technicalCore.intro}</p>
+      </div>
+      <SkillGroups groups={technicalSkillGroups} variant="compact" />
+    </div>
+  </div>
+</section>

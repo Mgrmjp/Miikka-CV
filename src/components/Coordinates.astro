@@ -1,0 +1,23 @@
+---
+import ExternalLinkIcon from "./ExternalLinkIcon.astro";
+import NewWindowHint from "./NewWindowHint.astro";
+import { profile } from "../data/profile";
+
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
+const { coordinates } = profile;
+---
+
+<a
+  class:list={["coordinates", "link-external", className]}
+  href={coordinates.mapsUrl}
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  {coordinates.display}
+  <NewWindowHint />
+  <ExternalLinkIcon />
+</a>

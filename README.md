@@ -1,4 +1,4 @@
-# Miikka Mäkelä — Portfolio & CV
+# Miikka Mäkelä | Portfolio & CV
 
 Static [Astro](https://astro.build/) site: Finnish portfolio homepage plus a dedicated CV page and downloadable PDF. Content lives in one TypeScript data file; build output is plain HTML/CSS for any static host.
 
@@ -10,7 +10,7 @@ Static [Astro](https://astro.build/) site: Finnish portfolio homepage plus a ded
 
 | Route | Purpose |
 |-------|---------|
-| `/` | Portfolio — hero, work samples, personal projects, background, contact |
+| `/` | Portfolio: hero, work samples, personal projects, background, contact |
 | `/cv` | Full CV (experience, clients, skills, case studies, education) |
 | `/ansioluettelo` | Redirects to `/cv` |
 | `/miikka-makela-cv.pdf` | PDF download (from `public/`) |
@@ -27,7 +27,7 @@ Static [Astro](https://astro.build/) site: Finnish portfolio homepage plus a ded
 - Node.js 20+ (LTS recommended)
 - npm
 
-Optional for PDF regeneration: Python 3 + venv (`scripts/requirements-pdf.txt`)
+Optional for PDF regeneration: Playwright Chromium (`npx playwright install chromium`)
 
 Optional for screenshot QA: Playwright (`npx playwright install chromium`)
 
@@ -59,7 +59,7 @@ src/
   styles/global.css    # Layout, tokens, components
 public/                # Favicon, profile image, PDF
 scripts/
-  create_cv_pdf.py     # Regenerate public/miikka-makela-cv.pdf
+  generate-cv-pdf.mjs  # Render /cv-print → public/miikka-makela-cv.pdf
   visual-qa.mjs        # Multi-viewport screenshots (dev only)
 ```
 
@@ -73,17 +73,22 @@ Profile image: replace `public/profile-circle.png` (also used for favicons if yo
 
 ## Regenerate CV PDF
 
-The PDF is generated with [ReportLab](https://www.reportlab.com/) (styled layout, red header, sections — separate from the Astro site):
+The PDF is rendered from the same HTML/CSS as the site (`/cv-print`) via Playwright:
 
 ```sh
-python3 -m venv .venv-pdf
-.venv-pdf/bin/pip install -r scripts/requirements-pdf.txt
-.venv-pdf/bin/python scripts/create_cv_pdf.py
+npx playwright install chromium   # once
+npm run cv:pdf
 ```
 
 Output: `public/miikka-makela-cv.pdf`
 
-Keep `scripts/create_cv_pdf.py` in sync with `profile.ts` when you update experience or clients.
+Preview the print layout at `/cv-print` or via **Esikatsele CV** on `/cv`.
+
+Fast loop with dev server already running:
+
+```sh
+CV_PDF_URL=http://127.0.0.1:4321/cv-print CV_PDF_SKIP_BUILD=1 npm run cv:pdf
+```
 
 ## Visual QA (optional)
 
@@ -108,4 +113,4 @@ Set production URL in `astro.config.mjs` (`site`) if the domain changes.
 
 ## License
 
-Private portfolio — all rights reserved unless stated otherwise.
+Private portfolio. All rights reserved unless stated otherwise.

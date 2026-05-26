@@ -1,0 +1,290 @@
+---
+import CompanyLink from "./CompanyLink.astro";
+import ExternalLinkIcon from "./ExternalLinkIcon.astro";
+import NewWindowHint from "./NewWindowHint.astro";
+import SkillGroups from "./SkillGroups.astro";
+import Coordinates from "./Coordinates.astro";
+import CvPreviewButton from "./CvPreviewButton.astro";
+import ProfilePhoto from "./ProfilePhoto.astro";
+import {
+  about,
+  cvCaseStudies,
+  cvPage,
+  cvSections,
+  technicalSkillGroups,
+  educationEntries,
+  experiences,
+  featuredClients,
+  interests,
+  languages,
+  personalProjects,
+  profile
+} from "../data/profile";
+
+type Props = {
+  printable?: boolean;
+};
+
+const { printable = false } = Astro.props;
+---
+
+<main id="main" class:list={["page-cv", printable && "page-cv--print"]}>
+  <header class="cv-hero">
+    <div class="cv-hero__layout">
+      <ProfilePhoto size="md" class="cv-hero__photo" />
+      <div class="cv-hero__content">
+        <p class="eyebrow">{cvSections.eyebrow}</p>
+        <h1>{profile.name}</h1>
+        <p class="cv-hero__title">{profile.title}</p>
+        <p class="cv-hero__tagline">{profile.tagline}</p>
+        <p class="cv-hero__intro">{cvPage.intro}</p>
+        {
+          printable ? (
+            <p class="cv-hero__contact-line">
+              <a href={`mailto:${profile.email}`}>{profile.email}</a>
+              <span aria-hidden="true"> · </span>
+              <a class="link-external" href={profile.linkedin} rel="noopener noreferrer" target="_blank">
+                LinkedIn
+                <NewWindowHint />
+                <ExternalLinkIcon />
+              </a>
+              <span aria-hidden="true"> · </span>
+              <a class="link-external" href={profile.github} rel="noopener noreferrer" target="_blank">
+                GitHub
+                <NewWindowHint />
+                <ExternalLinkIcon />
+              </a>
+              <span aria-hidden="true"> · </span>
+              {profile.age} v
+              <span aria-hidden="true"> · </span>
+              {profile.location}
+              <span aria-hidden="true"> · </span>
+              <Coordinates />
+            </p>
+          ) : (
+            <div class="actions cv-print-hide">
+              <a class="btn btn--primary" href={profile.cvPath} download>
+                {cvSections.downloadPdf}
+              </a>
+              <CvPreviewButton />
+              <a
+                class="btn btn--secondary link-external"
+                href={profile.linkedin}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                LinkedIn
+                <NewWindowHint />
+                <ExternalLinkIcon />
+              </a>
+              <a class="btn btn--ghost" href="/">{cvSections.portfolioLink}</a>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </header>
+
+  <section class="cv-block" aria-labelledby="cv-experience">
+    <h2 id="cv-experience" class="cv-block__title">{cvSections.experience}</h2>
+    <div class="cv-jobs">
+      {
+        experiences.map((job) => (
+          <article class="cv-job card">
+            <CompanyLink name={job.company} url={job.url} />
+            <p class="cv-job__role">{job.role}</p>
+            <p class="cv-job__period">
+              {job.period} · {job.location}
+            </p>
+            <ul>
+              {job.bullets.map((item) => <li>{item}</li>)}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="cv-block" aria-labelledby="cv-clients">
+    <h2 id="cv-clients" class="cv-block__title">{cvSections.clients}</h2>
+    <div class="cv-clients">
+      {
+        featuredClients.map((client) => (
+          <article class="cv-client card">
+            <CompanyLink name={client.name} url={client.url} />
+            <p>{client.summary}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="cv-block" aria-labelledby="cv-personal">
+    <h2 id="cv-personal" class="cv-block__title">{cvSections.personal}</h2>
+    <p class="cv-block__note">{cvSections.personalNote}</p>
+    <ul class="cv-projects">
+      {
+        personalProjects.map((project) => (
+          <li class="card cv-project">
+            <a class="link-external" href={project.url} rel="noopener noreferrer" target="_blank">
+              <strong>{project.name}</strong>
+              <NewWindowHint />
+              <ExternalLinkIcon />
+            </a>
+            <span class="cv-project__host">{project.hostname}</span>
+            <p>{project.description}</p>
+            {
+              !printable && (
+                <a
+                  class="cv-project__link link-external"
+                  href={project.url}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {cvSections.openSite}
+                  <NewWindowHint />
+                  <ExternalLinkIcon />
+                </a>
+              )
+            }
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="cv-block" aria-labelledby="cv-skills">
+    <h2 id="cv-skills" class="cv-block__title">{cvSections.skills}</h2>
+    <div class="cv-skills">
+      <SkillGroups groups={technicalSkillGroups} />
+    </div>
+  </section>
+
+  <section class="cv-block" aria-labelledby="cv-cases">
+    <h2 id="cv-cases" class="cv-block__title">{cvSections.cases}</h2>
+    <div class="cv-cases">
+      {
+        cvCaseStudies.map((study, index) => (
+          <article class="cv-case card">
+            <div class="cv-case__head">
+              <span class="cv-case__index">Case {String(index + 1).padStart(2, "0")}</span>
+              <ul class="tag-row" aria-label={cvSections.tech}>
+                {study.tags.map((tag) => <li>{tag}</li>)}
+              </ul>
+            </div>
+            <h3>{study.title}</h3>
+            <dl class="cv-case__details">
+              <div>
+                <dt>{cvSections.problem}</dt>
+                <dd>{study.problem}</dd>
+              </div>
+              <div>
+                <dt>{cvSections.work}</dt>
+                <dd>{study.work}</dd>
+              </div>
+              <div>
+                <dt>{cvSections.result}</dt>
+                <dd>{study.result}</dd>
+              </div>
+            </dl>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="cv-block" aria-labelledby="cv-education">
+    <h2 id="cv-education" class="cv-block__title">{cvSections.education}</h2>
+    <div class="cv-education card">
+      <ul class="cv-education__list">
+        {
+          educationEntries.map((entry) => (
+            <li class="cv-education__item">
+              <p class="cv-edu-degree">{entry.title}</p>
+              <p class="cv-edu-school">
+                {entry.org}
+                {"period" in entry && entry.period ? ` · ${entry.period}` : ""}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="cv-block" aria-labelledby="cv-languages">
+    <h2 id="cv-languages" class="cv-block__title">{cvSections.languages}</h2>
+    <ul class="cv-languages">
+      {
+        languages.map((lang) => (
+          <li>
+            <strong>{lang.name}</strong>: {lang.level}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="cv-block" aria-labelledby="cv-interests">
+    <h2 id="cv-interests" class="cv-block__title">{cvSections.interests}</h2>
+    <p class="cv-interests">{about.interestsBlurb}</p>
+    <ul class="interest-row interest-row--cv" aria-label="Kiinnostuksen kohteet">
+      {interests.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  {
+    !printable && (
+      <section class="cv-block" aria-labelledby="cv-contact">
+        <h2 id="cv-contact" class="cv-block__title">{cvSections.contact}</h2>
+        <div class="cv-contact card">
+          <ul class="cv-contact__list">
+            <li class="cv-contact__item">
+              <span class="cv-contact__key">{cvSections.contactEmail}</span>
+              <a class="cv-contact__value" href={`mailto:${profile.email}`}>
+                {profile.email}
+              </a>
+            </li>
+            <li class="cv-contact__item">
+              <span class="cv-contact__key">{cvSections.contactAge}</span>
+              <span class="cv-contact__value">{profile.age} v</span>
+            </li>
+            <li class="cv-contact__item">
+              <span class="cv-contact__key">{cvSections.contactLocation}</span>
+              <span class="cv-contact__value cv-contact__value--stack">
+                {profile.location}
+                <Coordinates class="cv-contact__coordinates" />
+              </span>
+            </li>
+          </ul>
+          <div class="cv-contact__actions actions">
+            <a
+              class="btn btn--secondary btn--sm link-external"
+              href={profile.linkedin}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              LinkedIn
+              <NewWindowHint />
+              <ExternalLinkIcon />
+            </a>
+            <a
+              class="btn btn--secondary btn--sm link-external"
+              href={profile.github}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              GitHub
+              <NewWindowHint />
+              <ExternalLinkIcon />
+            </a>
+            <CvPreviewButton size="sm" />
+            <a class="btn btn--primary btn--sm" href={profile.cvPath} download>
+              {cvSections.downloadPdfShort}
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+</main>

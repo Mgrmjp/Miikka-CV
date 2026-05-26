@@ -1,0 +1,28 @@
+---
+type SkillGroup = {
+  readonly label: string;
+  readonly items: readonly string[];
+};
+
+type Props = {
+  groups: readonly SkillGroup[];
+  variant?: "cv" | "compact";
+};
+
+const { groups, variant = "cv" } = Astro.props;
+---
+
+<div class:list={["skill-groups", variant === "cv" && "skill-groups--cv", variant === "compact" && "skill-groups--compact"]}>
+  {
+    groups.map((group) => (
+      <article class="skill-group skill-group--card">
+        <h3 class="skill-group__label">{group.label}</h3>
+        <ul class="skill-group__list">
+          {group.items.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </article>
+    ))
+  }
+</div>

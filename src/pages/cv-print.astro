@@ -1,0 +1,9 @@
+---
+import CvDocument from "../components/CvDocument.astro";
+import CvPrintLayout from "../layouts/CvPrintLayout.astro";
+import { cvPage, profile } from "../data/profile";
+---
+
+<CvPrintLayout title={`${profile.name} | Ansioluettelo`}>
+  <CvDocument printable />
+</CvPrintLayout>

@@ -17,8 +17,8 @@ import { cvSections, profile } from "../data/profile";
     </header>
     <iframe
       class="cv-preview-modal__frame"
-      src={profile.cvPath}
-      title={`${profile.name} — CV (PDF)`}
+      src="/cv-print"
+      title={`${profile.name} | Ansioluettelo`}
       loading="lazy"></iframe>
   </div>
 </dialog>
@@ -28,11 +28,18 @@ import { cvSections, profile } from "../data/profile";
     const dialog = document.getElementById("cv-preview-modal");
     if (!dialog || !(dialog instanceof HTMLDialogElement)) return;
 
+    let lastTrigger = null;
+
+    const closeDialog = () => {
+      dialog.close();
+    };
+
     document.querySelectorAll("[data-cv-preview-open]").forEach((trigger) => {
       if (trigger.dataset.cvPreviewBound === "true") return;
       trigger.dataset.cvPreviewBound = "true";
       trigger.addEventListener("click", (event) => {
         event.preventDefault();
+        lastTrigger = trigger instanceof HTMLElement ? trigger : null;
         dialog.showModal();
       });
     });
@@ -40,13 +47,22 @@ import { cvSections, profile } from "../data/profile";
     dialog.querySelectorAll("[data-cv-preview-close]").forEach((control) => {
       if (control.dataset.cvPreviewBound === "true") return;
       control.dataset.cvPreviewBound = "true";
-      control.addEventListener("click", () => dialog.close());
+      control.addEventListener("click", closeDialog);
     });
 
     if (dialog.dataset.cvPreviewBackdropBound !== "true") {
       dialog.dataset.cvPreviewBackdropBound = "true";
       dialog.addEventListener("click", (event) => {
-        if (event.target === dialog) dialog.close();
+        if (event.target === dialog) closeDialog();
+      });
+    }
+
+    if (dialog.dataset.cvPreviewCloseBound !== "true") {
+      dialog.dataset.cvPreviewCloseBound = "true";
+      dialog.addEventListener("close", () => {
+        if (lastTrigger instanceof HTMLElement) {
+          lastTrigger.focus();
+        }
       });
     }
   }

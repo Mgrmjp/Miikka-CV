@@ -1,4 +1,7 @@
 ---
+import Coordinates from "./Coordinates.astro";
+import ExternalLinkIcon from "./ExternalLinkIcon.astro";
+import NewWindowHint from "./NewWindowHint.astro";
 import { profile } from "../data/profile";
 ---
 
@@ -8,10 +11,20 @@ import { profile } from "../data/profile";
     <p class="site-footer__role">{profile.tagline}</p>
     <nav class="site-footer__links" aria-label="Alatunniste">
       <a href={`mailto:${profile.email}`}>Sähköposti</a>
-      <a href={profile.linkedin} rel="noreferrer" target="_blank">LinkedIn</a>
+      <a class="link-external" href={profile.linkedin} rel="noopener noreferrer" target="_blank">
+        LinkedIn
+        <NewWindowHint />
+        <ExternalLinkIcon />
+      </a>
       <a href="/cv">CV</a>
       <a href={profile.cvPath} download>PDF</a>
     </nav>
-    <p class="site-footer__note">Jyväskylä — WordPress-tuotantotyö ja integraatiot.</p>
+    <p class="site-footer__note">
+      <span class="site-footer__note-item">{profile.location}</span>
+      <span class="site-footer__note-sep" aria-hidden="true">·</span>
+      <Coordinates class="site-footer__coordinates" />
+      <span class="site-footer__note-sep" aria-hidden="true">·</span>
+      <span class="site-footer__note-item">WordPress-tuotantotyö ja integraatiot.</span>
+    </p>
   </div>
 </footer>

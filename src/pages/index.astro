@@ -1,9 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import FooterViz from "../components/FooterViz.astro";
+import CompanyLink from "../components/CompanyLink.astro";
 import Hero from "../components/Hero.astro";
-import LogoMarquee from "../components/LogoMarquee.astro";
-import PlayGrid from "../components/PlayGrid.astro";
+import ProofStrip from "../components/ProofStrip.astro";
+import TechnicalCoreSection from "../components/TechnicalCoreSection.astro";
+import NewWindowHint from "../components/NewWindowHint.astro";
 import Section from "../components/Section.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import ProjectCard from "../components/ProjectCard.astro";
@@ -12,12 +14,13 @@ import {
   about,
   interests,
   contactCta,
+  cvSections,
+  experiences,
   navPortfolio,
   personalProjects,
   personalProjectsSection,
   portfolio,
   profile,
-  rinkPlays,
   stories
 } from "../data/profile";
 ---
@@ -26,33 +29,68 @@ import {
   title={profile.portfolioMetaTitle}
   description={profile.portfolioMetaDescription}
 >
-  <SiteHeader navItems={navPortfolio} />
+  <SiteHeader navItems={navPortfolio} ctaVariant="secondary" />
 
   <main id="main" class="page-portfolio">
     <div class="container">
       <Hero />
     </div>
 
-    <LogoMarquee />
+    <div class="proof-strips">
+      <ProofStrip />
+    </div>
+
+    <div class="case-band">
+      <div class="container">
+        <Section
+          id="tyonaytteet"
+          label={portfolio.proofSection.label}
+          title={portfolio.proofSection.title}
+          intro={portfolio.proofSection.intro}
+          variant="cases"
+        >
+          <div class="story-grid">
+            {
+              stories.map((story, i) => (
+                <StoryArticle
+                  index={`0${i + 1}`}
+                  title={story.title}
+                  mess={story.mess}
+                  work={story.work}
+                  outcome={story.outcome}
+                  tags={story.tags}
+                />
+              ))
+            }
+          </div>
+        </Section>
+      </div>
+    </div>
+
+    <div class="proof-strips">
+      <TechnicalCoreSection />
+    </div>
 
     <div class="container">
       <Section
-        id="tyonaytteet"
-        label={portfolio.proofSection.label}
-        title={portfolio.proofSection.title}
-        intro={portfolio.proofSection.intro}
+        id="kokemus"
+        label={portfolio.experienceSection.label}
+        title={portfolio.experienceSection.title}
+        intro={portfolio.experienceSection.intro}
       >
-        <div class="story-grid">
+        <div class="experience-list">
           {
-            stories.map((story, i) => (
-              <StoryArticle
-                index={`0${i + 1}`}
-                title={story.title}
-                mess={story.mess}
-                work={story.work}
-                outcome={story.outcome}
-                tags={story.tags}
-              />
+            experiences.map((job) => (
+              <article class="experience-card card">
+                <CompanyLink name={job.company} url={job.url} />
+                <p class="experience-card__role">{job.role}</p>
+                <p class="experience-card__period">
+                  {job.period} · {job.location}
+                </p>
+                <ul>
+                  {job.bullets.map((item) => <li>{item}</li>)}
+                </ul>
+              </article>
             ))
           }
         </div>
@@ -64,7 +102,7 @@ import {
         title={personalProjectsSection.title}
         intro={personalProjectsSection.intro}
       >
-        <div class="project-grid">
+        <div class="project-list">
           {
             personalProjects.map((project) => (
               <ProjectCard
@@ -79,31 +117,21 @@ import {
         </div>
       </Section>
 
-      <Section
-        id="kentta"
-        label="Yhteenveto"
-        title="Neljä tuotantotyyppiä"
-        intro="Lyhyet esimerkit samasta työstä — integraatiot, automaatio, kauppa ja seuranta."
-        variant="inset"
-      >
-        <PlayGrid plays={rinkPlays} />
+      <Section id="mina" label="Tausta" title={about.title} intro={profile.positioning}>
+        <p class="about-short">{about.short}</p>
+        {
+          about.paragraphs.map((p) => (
+            <p class="about-short">{p}</p>
+          ))
+        }
+        <p class="about-short">{about.interestsBlurb}</p>
+        <ul class="interest-row" aria-label="Kiinnostuksen kohteet">
+          {interests.map((item) => <li>{item}</li>)}
+        </ul>
+        <p class="about-short about-short--link">
+          <a href="/cv">Ansioluettelo</a>: kokemus, asiakastyö, koulutus ja kielet.
+        </p>
       </Section>
-
-    <Section id="mina" label="Tausta" title={about.title}>
-      <p class="about-short">{about.short}</p>
-      {
-        about.paragraphs.map((p) => (
-          <p class="about-short">{p}</p>
-        ))
-      }
-      <p class="about-short">{about.interestsBlurb}</p>
-      <ul class="interest-row" aria-label="Kiinnostuksen kohteet">
-        {interests.map((item) => <li>{item}</li>)}
-      </ul>
-      <p class="about-short about-short--link">
-        <a href="/cv">Täydellinen CV</a> — kokemus, asiakastyö, koulutus ja kielet.
-      </p>
-    </Section>
 
       <Section
         id="yhteys"
@@ -114,33 +142,26 @@ import {
       >
         <div class="actions contact-actions">
           {
-            contactCta.links.map((link) =>
-              link.previewModal ? (
-                <button
-                  type="button"
-                  class="btn btn--secondary"
-                  data-cv-preview-open>
-                  {link.label}
-                </button>
-              ) : (
-                <a
-                  class:list={[
-                    "btn",
-                    link.primary && "btn--primary",
-                    !link.primary && !link.download && "btn--secondary",
-                    link.download && "btn--ghost"
-                  ]}
-                  href={link.href}
-                  {...link.external ? { target: "_blank", rel: "noreferrer" } : {}}
-                  {...link.download ? { download: true } : {}}
-                >
-                  {link.label}
-                </a>
-              )
-            )
+            contactCta.links.map((link) => (
+              <a
+                class:list={[
+                  "btn",
+                  link.primary && "btn--primary",
+                  !link.primary && !link.download && "btn--secondary",
+                  link.download && "btn--secondary",
+                  link.external && "link-external"
+                ]}
+                href={link.href}
+                {...link.external ? { target: "_blank", rel: "noopener noreferrer" } : {}}
+                {...link.download ? { download: true } : {}}
+              >
+                {link.label}
+                {link.external ? <NewWindowHint /> : null}
+              </a>
+            ))
           }
         </div>
-        <p class="contact-note">Vastaan yleensä arkipäivisin — ei myyntipuhetta ennen kuin näen, mitä on rikki.</p>
+        <p class="contact-note">Vastaan yleensä arkipäivisin. Ei myyntipuhetta ennen kuin näen, mitä on rikki.</p>
       </Section>
     </div>
   </main>
