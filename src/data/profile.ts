@@ -19,6 +19,7 @@ export const profile = {
   github: "https://github.com/Mgrmjp",
   cvPath: "/miikka-makela-cv.pdf",
   avatar: "/profile-circle.png",
+  avatarPlaceholder: "/profile-circle-lq.jpg",
   avatarAlt: "Miikka Mäkelän profiilikuva",
   metaTitle: "Miikka Mäkelä | Tuotanto, integraatiot ja WordPress",
   metaDescription:

@@ -1,0 +1,69 @@
+---
+type Props = {
+  src: string;
+  placeholderSrc: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  loading?: "lazy" | "eager";
+  class?: string;
+};
+
+const {
+  src,
+  placeholderSrc,
+  alt,
+  width,
+  height,
+  loading = "lazy",
+  class: className
+} = Astro.props;
+---
+
+<span class:list={["progressive-image", className]} data-progressive-image>
+  <img
+    class="progressive-image__placeholder"
+    src={placeholderSrc}
+    alt=""
+    aria-hidden="true"
+    width={width}
+    height={height}
+    decoding="async"
+  />
+  <img
+    class="progressive-image__full"
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding="async"
+  />
+</span>
+
+<script>
+  function initProgressiveImages() {
+    document.querySelectorAll("[data-progressive-image]").forEach((wrapper) => {
+      if (wrapper.dataset.progressiveReady === "true") return;
+
+      const full = wrapper.querySelector(".progressive-image__full");
+      if (!(full instanceof HTMLImageElement)) return;
+
+      const markLoaded = () => {
+        wrapper.classList.add("is-loaded");
+        wrapper.dataset.progressiveReady = "true";
+      };
+
+      if (full.complete && full.naturalWidth > 0) {
+        markLoaded();
+        return;
+      }
+
+      full.addEventListener("load", markLoaded, { once: true });
+      full.addEventListener("error", markLoaded, { once: true });
+    });
+  }
+
+  initProgressiveImages();
+  document.addEventListener("astro:page-load", initProgressiveImages);
+</script>

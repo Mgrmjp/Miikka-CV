@@ -1,6 +1,7 @@
 ---
 import ExternalLinkIcon from "./ExternalLinkIcon.astro";
 import NewWindowHint from "./NewWindowHint.astro";
+import ProfilePhoto from "./ProfilePhoto.astro";
 import { profile } from "../data/profile";
 
 type Props = {
@@ -32,14 +33,7 @@ function isNavActive(href: string, download?: boolean) {
 <header class="site-header">
   <div class="site-header__inner container">
     <a class="brand" href="/">
-      <img
-        class="brand__avatar"
-        src={profile.avatar}
-        alt=""
-        width="36"
-        height="36"
-        decoding="async"
-      />
+      <ProfilePhoto size="sm" class="brand__avatar" alt="" />
       <span class="brand__name">{profile.name}</span>
     </a>
 
