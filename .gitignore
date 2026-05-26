@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.venv-favicon/
+.qa-screenshots/
+.agents/
+.codex/
+profile_circle.png
+.env
+.env.*
+!.env.example

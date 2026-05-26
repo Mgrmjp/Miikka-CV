@@ -1,0 +1,30 @@
+---
+type Variant = "default" | "inset" | "cases" | "contact";
+
+type Props = {
+  id?: string;
+  label: string;
+  title: string;
+  subtitle?: string;
+  intro?: string;
+  variant?: Variant;
+};
+
+const { id, label, title, subtitle, intro, variant = "default" } = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={["section", variant !== "default" && `section--${variant}`]}
+  aria-labelledby={`${id ?? label}-title`}
+>
+  <header class="section__head">
+    <p class="eyebrow">{label}</p>
+    <h2 id={`${id ?? label}-title`} class="section__title">{title}</h2>
+    {subtitle && <p class="section__subtitle">{subtitle}</p>}
+    {intro && <p class="section__intro">{intro}</p>}
+  </header>
+  <div class="section__body">
+    <slot />
+  </div>
+</section>

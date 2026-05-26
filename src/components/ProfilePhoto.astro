@@ -1,0 +1,20 @@
+---
+import { profile } from "../data/profile";
+
+type Props = {
+  size?: "sm" | "md" | "lg";
+  class?: string;
+};
+
+const { size = "md", class: className } = Astro.props;
+---
+
+<img
+  class:list={["profile-photo", `profile-photo--${size}`, className]}
+  src={profile.avatar}
+  alt={profile.avatarAlt}
+  width="1086"
+  height="1086"
+  loading={size === "lg" ? "eager" : "lazy"}
+  decoding="async"
+/>

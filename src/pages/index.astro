@@ -1,0 +1,140 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FooterViz from "../components/FooterViz.astro";
+import Hero from "../components/Hero.astro";
+import LogoMarquee from "../components/LogoMarquee.astro";
+import PlayGrid from "../components/PlayGrid.astro";
+import Section from "../components/Section.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import StoryArticle from "../components/StoryArticle.astro";
+import {
+  about,
+  interests,
+  contactCta,
+  navPortfolio,
+  personalProjects,
+  personalProjectsSection,
+  portfolio,
+  profile,
+  rinkPlays,
+  stories
+} from "../data/profile";
+---
+
+<BaseLayout
+  title={profile.portfolioMetaTitle}
+  description={profile.portfolioMetaDescription}
+>
+  <SiteHeader navItems={navPortfolio} />
+
+  <main id="main" class="page-portfolio">
+    <div class="container">
+      <Hero />
+    </div>
+
+    <LogoMarquee />
+
+    <div class="container">
+      <Section
+        id="tyonaytteet"
+        label={portfolio.proofSection.label}
+        title={portfolio.proofSection.title}
+        intro={portfolio.proofSection.intro}
+      >
+        <div class="story-grid">
+          {
+            stories.map((story, i) => (
+              <StoryArticle
+                index={`0${i + 1}`}
+                title={story.title}
+                mess={story.mess}
+                work={story.work}
+                outcome={story.outcome}
+                tags={story.tags}
+              />
+            ))
+          }
+        </div>
+      </Section>
+
+      <Section
+        id="omat"
+        label={personalProjectsSection.label}
+        title={personalProjectsSection.title}
+        intro={personalProjectsSection.intro}
+      >
+        <div class="project-grid">
+          {
+            personalProjects.map((project) => (
+              <ProjectCard
+                name={project.name}
+                url={project.url}
+                hostname={project.hostname}
+                description={project.description}
+                tags={project.tags}
+              />
+            ))
+          }
+        </div>
+      </Section>
+
+      <Section
+        id="kentta"
+        label="Yhteenveto"
+        title="Neljä tuotantotyyppiä"
+        intro="Lyhyet esimerkit samasta työstä — integraatiot, automaatio, kauppa ja seuranta."
+        variant="inset"
+      >
+        <PlayGrid plays={rinkPlays} />
+      </Section>
+
+    <Section id="mina" label="Tausta" title={about.title}>
+      <p class="about-short">{about.short}</p>
+      {
+        about.paragraphs.map((p) => (
+          <p class="about-short">{p}</p>
+        ))
+      }
+      <p class="about-short">{about.interestsBlurb}</p>
+      <ul class="interest-row" aria-label="Kiinnostuksen kohteet">
+        {interests.map((item) => <li>{item}</li>)}
+      </ul>
+      <p class="about-short about-short--link">
+        <a href="/cv">Täydellinen CV</a> — kokemus, asiakastyö, koulutus ja kielet.
+      </p>
+    </Section>
+
+      <Section
+        id="yhteys"
+        label="Yhteys"
+        title="Kerro, mikä sotku sulla on"
+        intro={contactCta.offer}
+        variant="contact"
+      >
+        <div class="actions contact-actions">
+          {
+            contactCta.links.map((link) => (
+              <a
+                class:list={[
+                  "btn",
+                  link.primary && "btn--primary",
+                  !link.primary && !link.download && "btn--secondary",
+                  link.download && "btn--ghost"
+                ]}
+                href={link.href}
+                {...link.external ? { target: "_blank", rel: "noreferrer" } : {}}
+                {...link.download ? { download: true } : {}}
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </div>
+        <p class="contact-note">Vastaan yleensä arkipäivisin — ei myyntipuhetta ennen kuin näen, mitä on rikki.</p>
+      </Section>
+    </div>
+  </main>
+
+  <FooterViz />
+</BaseLayout>

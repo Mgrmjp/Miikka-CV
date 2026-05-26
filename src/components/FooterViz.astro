@@ -1,0 +1,17 @@
+---
+import { profile } from "../data/profile";
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p class="site-footer__name">{profile.name}</p>
+    <p class="site-footer__role">{profile.tagline}</p>
+    <nav class="site-footer__links" aria-label="Alatunniste">
+      <a href={`mailto:${profile.email}`}>Sähköposti</a>
+      <a href={profile.linkedin} rel="noreferrer" target="_blank">LinkedIn</a>
+      <a href="/cv">CV</a>
+      <a href={profile.cvPath} download>PDF</a>
+    </nav>
+    <p class="site-footer__note">Jyväskylä — WordPress-tuotantotyö ja integraatiot.</p>
+  </div>
+</footer>

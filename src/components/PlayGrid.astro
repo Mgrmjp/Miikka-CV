@@ -1,0 +1,23 @@
+---
+import type { rinkPlays } from "../data/profile";
+
+type Play = (typeof rinkPlays)[number];
+
+type Props = {
+  plays: readonly Play[];
+};
+
+const { plays } = Astro.props;
+---
+
+<div class="play-grid">
+  {
+    plays.map((play) => (
+      <article class="play-card">
+        <p class="play-card__tools">{play.tools}</p>
+        <h3>{play.title}</h3>
+        <p>{play.hook}</p>
+      </article>
+    ))
+  }
+</div>

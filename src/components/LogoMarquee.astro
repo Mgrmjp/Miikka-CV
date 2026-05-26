@@ -1,0 +1,13 @@
+---
+import { proofPoints } from "../data/profile";
+---
+
+<div class="proof-strip" aria-label="Teknologia ja työkalut">
+  <div class="container proof-strip__inner">
+    {
+      proofPoints.map((item) => (
+        <span class="proof-strip__item">{item}</span>
+      ))
+    }
+  </div>
+</div>

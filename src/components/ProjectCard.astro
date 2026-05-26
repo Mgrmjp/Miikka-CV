@@ -1,0 +1,25 @@
+---
+type Props = {
+  name: string;
+  url: string;
+  hostname: string;
+  description: string;
+  tags: readonly string[];
+};
+
+const { name, url, hostname, description, tags } = Astro.props;
+---
+
+<article class="project-card card">
+  <p class="project-card__host">{hostname}</p>
+  <h3>
+    <a href={url} rel="noreferrer" target="_blank">{name}</a>
+  </h3>
+  <p class="project-card__desc">{description}</p>
+  <ul class="tag-row" aria-label="Teknologia">
+    {tags.map((tag) => <li>{tag}</li>)}
+  </ul>
+  <a class="project-card__link" href={url} rel="noreferrer" target="_blank">
+    Avaa sivusto
+  </a>
+</article>

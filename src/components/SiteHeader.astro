@@ -1,0 +1,45 @@
+---
+import { profile } from "../data/profile";
+
+type Props = {
+  navItems: readonly { href: string; label: string; download?: boolean }[];
+  ctaHref?: string;
+  ctaLabel?: string;
+};
+
+const { navItems, ctaHref = "#yhteys", ctaLabel = "Ota yhteyttä" } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="site-header__inner container">
+    <a class="brand" href="/">
+      <img
+        class="brand__avatar"
+        src={profile.avatar}
+        alt=""
+        width="36"
+        height="36"
+        decoding="async"
+      />
+      <span class="brand__name">{profile.name}</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Päävalikko">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            {...item.download ? { download: true } : {}}
+            {...item.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {}}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a class="btn btn--primary btn--sm site-header__cta" href={ctaHref}>
+      {ctaLabel}
+    </a>
+  </div>
+</header>

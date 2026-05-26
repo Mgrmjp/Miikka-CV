@@ -1,0 +1,28 @@
+---
+import { hero, profile } from "../data/profile";
+import CvSnapshot from "./CvSnapshot.astro";
+import ProfilePhoto from "./ProfilePhoto.astro";
+---
+
+<header class="hero">
+  <div class="hero__layout">
+    <div class="hero__content">
+      <p class="eyebrow">{profile.tagline}</p>
+      <h1>{hero.headline}</h1>
+      <p class="hero__lead">{hero.lead}</p>
+      <p class="hero__cred">{hero.credibility}</p>
+      <div class="actions hero__actions">
+        <a class="btn btn--primary" href="#tyonaytteet">Työnäytteet</a>
+        <a class="btn btn--secondary" href="/cv">Avaa CV</a>
+        <a class="btn btn--ghost" href={profile.linkedin} rel="noreferrer" target="_blank">
+          LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__aside">
+      <ProfilePhoto size="lg" class="hero__photo" />
+      <CvSnapshot />
+    </div>
+  </div>
+</header>

@@ -1,0 +1,175 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProfilePhoto from "../components/ProfilePhoto.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import {
+  about,
+  cvCaseStudies,
+  cvPage,
+  cvSections,
+  cvSkills,
+  education,
+  experiences,
+  featuredClients,
+  interests,
+  languages,
+  navCv,
+  personalProjects,
+  profile
+} from "../data/profile";
+---
+
+<BaseLayout title={`${profile.name} | Ansioluettelo`} description={cvPage.intro}>
+  <SiteHeader navItems={navCv} ctaHref={`mailto:${profile.email}`} ctaLabel="Sähköposti" />
+
+  <main id="main" class="page-cv container">
+    <header class="cv-hero">
+      <div class="cv-hero__layout">
+        <ProfilePhoto size="md" class="cv-hero__photo" />
+        <div class="cv-hero__content">
+          <p class="eyebrow">{cvSections.eyebrow}</p>
+          <h1>{profile.name}</h1>
+          <p class="cv-hero__title">{profile.title}</p>
+          <p class="cv-hero__tagline">{profile.tagline}</p>
+          <p class="cv-hero__intro">{cvPage.intro}</p>
+          <div class="actions">
+            <a class="btn btn--primary" href={profile.cvPath} download>{cvSections.downloadPdf}</a>
+            <a class="btn btn--secondary" href={profile.linkedin} rel="noreferrer" target="_blank">
+              LinkedIn
+            </a>
+            <a class="btn btn--ghost" href="/">{cvSections.portfolioLink}</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="cv-block" aria-labelledby="cv-experience">
+      <h2 id="cv-experience" class="cv-block__title">{cvSections.experience}</h2>
+      <div class="cv-jobs">
+        {
+          experiences.map((job) => (
+            <article class="cv-job card">
+              <h3>{job.company}</h3>
+              <p class="cv-job__role">{job.role}</p>
+              <p class="cv-job__period">
+                {job.period} · {job.location}
+              </p>
+              <ul>
+                {job.bullets.map((item) => <li>{item}</li>)}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="cv-block" aria-labelledby="cv-clients">
+      <h2 id="cv-clients" class="cv-block__title">{cvSections.clients}</h2>
+      <div class="cv-clients">
+        {
+          featuredClients.map((client) => (
+            <article class="cv-client card">
+              <h3>{client.name}</h3>
+              <p>{client.summary}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="cv-block" aria-labelledby="cv-personal">
+      <h2 id="cv-personal" class="cv-block__title">{cvSections.personal}</h2>
+      <p class="cv-block__note">{cvSections.personalNote}</p>
+      <ul class="cv-projects">
+        {
+          personalProjects.map((project) => (
+            <li class="card cv-project">
+              <a href={project.url} rel="noreferrer" target="_blank">
+                <strong>{project.name}</strong>
+              </a>
+              <span class="cv-project__host">{project.hostname}</span>
+              <p>{project.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="cv-block" aria-labelledby="cv-skills">
+      <h2 id="cv-skills" class="cv-block__title">{cvSections.skills}</h2>
+      <p class="cv-skills card">{cvSkills}</p>
+    </section>
+
+    <section class="cv-block" aria-labelledby="cv-cases">
+      <h2 id="cv-cases" class="cv-block__title">{cvSections.cases}</h2>
+      <p class="cv-block__note" set:html={cvSections.casesNote} />
+      <div class="cv-cases">
+        {
+          cvCaseStudies.map((study) => (
+            <article class="cv-case card">
+              <h3>{study.title}</h3>
+              <dl>
+                <div>
+                  <dt>{cvSections.problem}</dt>
+                  <dd>{study.problem}</dd>
+                </div>
+                <div>
+                  <dt>{cvSections.work}</dt>
+                  <dd>{study.work}</dd>
+                </div>
+                <div>
+                  <dt>{cvSections.result}</dt>
+                  <dd>{study.result}</dd>
+                </div>
+                <div>
+                  <dt>{cvSections.tech}</dt>
+                  <dd>{study.tech}</dd>
+                </div>
+              </dl>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="cv-block" aria-labelledby="cv-education">
+      <h2 id="cv-education" class="cv-block__title">{cvSections.education}</h2>
+      <div class="card cv-edu">
+        <p class="cv-edu-degree">{education.degree}</p>
+        <p class="cv-edu-school">{education.school} · {education.period}</p>
+      </div>
+    </section>
+
+    <section class="cv-block" aria-labelledby="cv-interests">
+      <h2 id="cv-interests" class="cv-block__title">{cvSections.interests}</h2>
+      <p class="cv-interests">{about.interestsBlurb}</p>
+      <ul class="interest-row interest-row--cv" aria-label="Kiinnostuksen kohteet">
+        {interests.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <section class="cv-block" aria-labelledby="cv-languages">
+      <h2 id="cv-languages" class="cv-block__title">{cvSections.languages}</h2>
+      <ul class="cv-languages">
+        {
+          languages.map((lang) => (
+            <li>
+              <strong>{lang.name}</strong> — {lang.level}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="cv-block" aria-labelledby="cv-contact">
+      <h2 id="cv-contact" class="cv-block__title">{cvSections.contact}</h2>
+      <ul class="cv-contact">
+        <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+        <li>{profile.location}</li>
+        <li><a href={profile.linkedin} rel="noreferrer" target="_blank">LinkedIn</a></li>
+        <li><a href={profile.github} rel="noreferrer" target="_blank">GitHub</a></li>
+        <li><a href={profile.cvPath} download>{cvSections.downloadPdfShort}</a></li>
+      </ul>
+    </section>
+  </main>
+</BaseLayout>

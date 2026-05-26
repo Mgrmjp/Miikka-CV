@@ -1,0 +1,36 @@
+---
+type Props = {
+  index: string;
+  title: string;
+  mess: string;
+  work: string;
+  outcome: string;
+  tags: readonly string[];
+};
+
+const { index, title, mess, work, outcome, tags } = Astro.props;
+---
+
+<article class="story-card card">
+  <div class="story-card__head">
+    <span class="story-card__index">{index}</span>
+    <ul class="tag-row" aria-label="Työkalut">
+      {tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+  </div>
+  <h3>{title}</h3>
+  <dl class="story-card__details">
+    <div>
+      <dt>Ongelma</dt>
+      <dd>{mess}</dd>
+    </div>
+    <div>
+      <dt>Mitä tein</dt>
+      <dd>{work}</dd>
+    </div>
+    <div>
+      <dt>Lopputulos</dt>
+      <dd>{outcome}</dd>
+    </div>
+  </dl>
+</article>
