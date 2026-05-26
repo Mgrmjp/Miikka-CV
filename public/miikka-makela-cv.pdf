@@ -1,149 +1,105 @@
 %PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document (opensource)
 1 0 obj
-<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+<<
+/F1 2 0 R /F2 3 0 R /F3 4 0 R /F4 6 0 R
+>>
 endobj
 2 0 obj
-<< /Type /Pages /Kids [4 0 R 6 0 R] /Count 2 >>
+<<
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+>>
 endobj
 3 0 obj
-<< /Length 2445 >>
-stream
-BT
-/F1 10.5 Tf
-72 790 Td
-14 TL
-(Miikka Mäkelä) Tj
-T*
-(Verkkokehittäjä - Full-Stack Care / Huolenpito - Into-Digital Oy) Tj
-T*
-(Jyväskylä, Suomi | miikka.mla@gmail.com | linkedin.com/in/miikkamgr/) Tj
-T*
-() Tj
-T*
-(Profiili) Tj
-T*
-(Mediatekniikan insinööri \(JAMK\). Autan rakentamaan WordPress-kokonaisuuksia, joissa) Tj
-T*
-(suorituskyky, integraatiot ja mitattava hyöty kulkevat käsi kädessä.) Tj
-T*
-(Yli viisi vuotta Into-Digitalin Huolenpidossa: WordPress, WooCommerce, ACF, WP-CLI,) Tj
-T*
-(integraatiot, analytiikka ja tekninen ylläpito.) Tj
-T*
-() Tj
-T*
-(Kokemus - Into-Digital Oy) Tj
-T*
-(Verkkokehittäjä, Full-Stack Care / Huolenpito | helmi 2021 - | Jyväskylä.) Tj
-T*
-(WordPress- ja WooCommerce-sivustot, ACF, Vue, WP-CLI, LiteSpeed, API-integraatiot ja omat) Tj
-T*
-(lisäosat.) Tj
-T*
-(World Vision Suomi, Burger King Suomi, Plan Suomi ja muut - ylläpito ja tuotantodebuggaus.) Tj
-T*
-() Tj
-T*
-(Kokemus - Zaibatsu Interactive Inc.) Tj
-T*
-(Graafikon harjoittelija | syys 2019 - touko 2020 | Jyväskylä.) Tj
-T*
-(Graafinen suunnittelu, 3D-mallinnus, JavaScript \(Vue, React\) - askel kohti full stack) Tj
-T*
-(-työtä.) Tj
-T*
-() Tj
-T*
-(Asiakastyötä) Tj
-T*
-(World Vision Suomi - verkkopalvelun ylläpito ja kehitys.) Tj
-T*
-(Burger King Suomi - sivuston ylläpito, kampanjat ja analytiikka.) Tj
-T*
-(Plan Suomi - ylläpito, varainhankinta ja WordPress-tuotanto.) Tj
-T*
-() Tj
-T*
-(Omat projektit) Tj
-T*
-(suomalaisetnhlssa.fi - suomalaisten NHL-pelaajien tilastot NHL:n virallisista lähteistä.) Tj
-T*
-(wavesjyvaskyla.fi - Waves-konttiravintola Jyväskylässä, kaksikielinen sivusto.) Tj
-T*
-(lukkokokoonpano.koubou.eu - Rauman Lukon Liiga-kokoonpanotyökalu.) Tj
-T*
-() Tj
-T*
-(Taidot) Tj
-T*
-(WordPress, WooCommerce, PHP, ACF, Gutenberg, WP-CLI, Vue.js, JavaScript, REST, SOAP, WPML,) Tj
-T*
-(Polylang, LiteSpeed, Redis, Lando, Docker, GA4, GTM, Playwright, automaatio, suorituskyky.) Tj
-T*
-() Tj
-T*
-(Tekniset työnäytteet) Tj
-T*
-(Lando + WP-CLI: toistettava polku localista stagingiin ja tuotantoon.) Tj
-T*
-(Stripe + Gravity Forms: maksustatus, audit-metadata, WP-CLI-rekonsiliointi.) Tj
-T*
-(WooCommerce + WPML: importin, aikavyöhykkeen ja ajastusten varasto-ongelmat.) Tj
-T*
-() Tj
-T*
-(Koulutus) Tj
-T*
-(Jyväskylän ammattikorkeakoulu \(JAMK\) - insinööri \(AMK\), mediatekniikka - 2016-2020.) Tj
-T*
-() Tj
-T*
-(Kiinnostuksen kohteet) Tj
-T*
-(3D-tulostus, paikalliset LLM:t, tekniikka, botaniikka, seuraava projekti aina suunnitteilla.) Tj
-T*
-() Tj
-T*
-(Kielet) Tj
-T*
-ET
-endstream
+<<
+/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+>>
 endobj
 4 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 1 0 R >> >> /Contents 3 0 R >>
+<<
+/BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding /Name /F3 /Subtype /Type1 /Type /Font
+>>
 endobj
 5 0 obj
-<< /Length 108 >>
-stream
-BT
-/F1 10.5 Tf
-72 790 Td
-14 TL
-(Suomi - äidinkieli. Englanti - ammattitaitoinen työkieli.) Tj
-T*
-() Tj
-T*
-ET
-endstream
+<<
+/Contents 11 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 10 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
 endobj
 6 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 1 0 R >> >> /Contents 5 0 R >>
+<<
+/BaseFont /Symbol /Name /F4 /Subtype /Type1 /Type /Font
+>>
 endobj
 7 0 obj
-<< /Type /Catalog /Pages 2 0 R >>
+<<
+/Contents 12 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 10 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
+endobj
+8 0 obj
+<<
+/PageMode /UseNone /Pages 10 0 R /Type /Catalog
+>>
+endobj
+9 0 obj
+<<
+/Author (Miikka M\344kel\344) /CreationDate (D:20260526071119+03'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20260526071119+03'00') /Producer (ReportLab PDF Library - \(opensource\)) 
+  /Subject (\(unspecified\)) /Title (Miikka M\344kel\344 \204 CV) /Trapped /False
+>>
+endobj
+10 0 obj
+<<
+/Count 2 /Kids [ 5 0 R 7 0 R ] /Type /Pages
+>>
+endobj
+11 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2647
+>>
+stream
+GauHM8TWWG(;B*9]Lu<d)2T]M1T,4SS^j;kOX@'!o&X#+-&<\:&:d[TpJV&?M3dO^*@j/&TKqN(b6NP_#U'cRIp)sP3J#X\"@rZZ>9HM!^uPRrRLHn?Jg(`SU4C/Oe*B;]^pelF1^gTE.LF%)O;2Js5RhF4"DJJ0q`,/H6-CPb;TkqRGm$\WQ3H%aR^rBcZsrH*6tq_q;@o5FE,s'&<?YURa%90+DMMjY=i071-/2^#nfU`FkjJ!r>8n]U'd!Zf#PU4?@2Yk\R_Z9OHl`-)6g%-n`Z%[HTi2D!c;k&+<n39G,UePUJ.VMT8"SW6<<a$Y&L9d^OH;^n+N\^)XroEP`"!bXO;EV?$?p8P95Eg[EEL#Ck9'tY:bfR0:lr-:%#ZN/@gGVo'j5@tC1Xe8\+5Ib!Y'k<kC_+np6KpM&@uP2G-S8/%Olq8#3ifJKIHLdLo#(Ki"-OePLESF6nS\=bYn4eMa-'<=U9\*%RHM:H'(?gL8<%L*QoX#mdZ6!:LY-O\9C&"e#'-U72JX5bA_1q_0)"(nB,]6)JbjDE/kB];g;dtVddWPr/P%@<igt94G0;_8Y!g4'M0@CjZTjmRibt@_P`9VmfH8@D:V`'<Ge6PL+kNkAmVju=Xp@1rd.rrj2"^GrXEM7U,+._bUF4'rl]WEpt'Sa(Zr`NgqC7rbK#6T.r6!/Bp'2V+@TuZIJA4/Dr6'C??AAIL^49#/`D,"e]:t73.'0=HcCoE6sIYKHlEWA2[Ba,)A'Df(."$P,gAqceTSKnQ2=f-5>%NC*V-J5E]>-*7In-Ib>th!N],n]N1m,6@&uZq9IM6jj".Nd%>3u1GA!92YFbu;Ai'j.YbFHoN@<_CCh?`X<GGLT8d]+OQqB(Q_GW.c&<r:ddmd?,C,=Y6mXtm@k7+.t;Ss-@AfA(s28Wg4\`sW'L0&JV)CcPQb`=Q[PT>AuHQau8j-o4Nc="na@^%agCP9/`bL&s@B,WcD]=aY*V=;I\1dh$^jghI.g.^`BcH]c+iQKd8r8R)T\qV%'$KN/n11Fmr-%^2tTE7%,-)"'3!<-aJ"3P"?\^Uo:;3\sl<i2`\9-unX-AFd65ljDKK=FCr*BiO7N$ej.^k2-BXB14+%%ARa_`g)ahTLf-7eP]/PX5-2dOL66%f%e2,Efn%pcZ%%D7hj9]"nCh2EfP7Bnu_L!QqR3`"pp?)rT&N'*#q&nsViY7`<;FjsL[C^lL?Eb+0j5(0roh'kCPDeLP<&&NJgB>a%:"">f/]I@gDD4anO,SItU-buU`;qMl7o)l7DW\ift.kWYCfR&8mYV),aIm-<u:S)$4?.k.4MDmqmU,M6iT:G4u&`g.Ru&_-;f+)!5a;H:V8R^j1VCXg.fX6rko07.9`n$go?k7R''VAN>KU5$5hCrbHiprjG9_W.^@r+VT[D;[PjoBk$B8$R\T;;U[Ier\TVNC(f+]eT+=)V)lkC&%QW\`\5@99(H.1KX(a&8G5p#"r+PI?S2!A$AEL5\Z`E0t4r/BMGmH<5>Mr93Q%a*arkI&I3hKec;^!'eB1&6m#o.jY7^rs,c'0<lVucg>Gr:22/MKg.)d=*M]IDD@g_hARPWu9?FQ<S1W-4#IW55LdG#9NhN;KV!T;`:H"9D/:W!pG'G&O'YV%.?;niLiQPkf&AK48[N5caPRY?N\An'g(-oAnEIHm]`MpS#f#+b4&c[;)m<KbLnl:oA,o<#dXl8'tk-T`&pA!P,S]ai@&33Z-5qu^#H1u46U"fLA2QQ_B0($NW-_jaE_,5?nmNVc>ia2q$j#GbVJ&iSc"]h&B-]`W'6(rq.j:ps*oYe3^%m3q7f9@4ofTdF!h5D-_&D'BM]A%DBTF2E<qm,lufY(ZkRpO>i-J9"(^"73F;0VAXi#P6n\E9h@eO+"hc%MB&oaiUS="'C.EJ>C6R[pQe*u2]_Laqfn`$;klIFi[9eEr:53`%W4V=Hm2CE)t7=CZtW/5T<sFWN>Wo5fg[HDh_CS]H5*DLSgOEnfGn&,'-IjM*<#USQP+J$K`QOYq/iMJBES[eAN@)QMOf2&5VQ2]&5(jbQP;IPg(u[ki4(Kn)$r>V<U6lXF71$`i]@j:]GZ&N0K@CT<\i2-TM=*VI/!mm`QV>-hMc*<M9;b..Zj<f0n9Eo3[@,/a)q/N]f'=9"7NG!nd0Yrd,38L[[gA5Gj=,>CGJ,78oe;knjN@j0M/@riXW=8P`l+ZF@uK!gtHDpS%O!*E-@!qkel3'fHd4joB*8a!b[=R!<,<?ZA=+^aA/RZqbN[[._#pTc"=kEco,'`[[X1#'Mi:U<3*gm(`tVE6.;IcBY;Q%(bTJ)qbY)bn9\D<C3m\'t&sT+)6q/Yt)r[(ej(24jT@nV=HOmFo_kpU!#@]TRZ[;7*_)k8g,sS["LW"c?H0V"@P[/)$Tl^HQF/U0^VJrPQ/[M@'fZEjjMSj5sR`k)37o1g8Ju#c6?qF:Jp)LoGS#!mC$99ouq*7-EUUm9)b\lo]Nn[\"'(hfZZC:Zg%d$PJcG]T\`8P@6m;poG9KZ;]I)h885ShGP']P/;\@ZeOF*I_kJ=I74$L+4'Z=UNW-t`\j\G>8^`>\=LaZY$b$XhB0\+o"#!EGA?ds$Fb5!9kGWM$B;@\<bVaF/N-b<AjNEaSkC&hB,LOg7ZX_V~>endstream
+endobj
+12 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 1331
+>>
+stream
+GauHJa`8=Z&A@ZcqNR]f&Xn.</[6UgCbfu]-E^><dM<Fp#n0)F1rdMLG6((OeA>aZ;LBTQcCie`HANes#ib?%dfB<QK_*A(iWPQs6C`l@Q?0Q<:-ME@<CV76_>Wu]X,4pUe&4LXLn[Z0(t)S%<?>_u5b;"#YEJJB1C_s"K9]?qhFr@%+gO51/%Br5)h0q5\G;JJ,St_G="u6FQnF2Z6<L>;/5oIDiu'DWYl*@Y4Vj)O;.`[G=8\M5#K`+HYEP$20-Wi*YZR3faO<8(RqD6]=D7o;O/%7comrW?-;Y5(M):(\U4.'i)ji8PX0a9CYj-:L&=LBTc.^Hdp3)@)Uk,(H7F,Dum\+dc%!l_/k;m0uAGHX_HT.QGg\0i1-i"0o<\"F/hOoUUo'D;*_85@cac$%>&$MX9glU4e(K#@AdBF@01AQ/IMte`B3OcVkA#F2<83VOtFL[T1j%fcJ5Q$:brr!A[+rIqUf^&mpnq5\5cuiimaHE;H7$Q7o>ep=0/qG6<L&d9$o>NVCkr#rWPOJ[eC9]/C_kh4>%TZ/!6A):Zh;5*])G>g!KQkP%o(<g*Oh/A!'"eLa0lgYE8ErQg6/F@7.2a&%&.M1jl.hIZ9`E&!%*)/dPERlua"9sEI0p]J!&;sT.AuP[1m^!`[jI\(P&ZJ?Si#onc<e_uB!#%`FJL>c1ErincG(7okK^AD`]gUgd--Db+WsGWh9\%!\6]qH8br,3^9C<VgDeK9pMUl>JaP\0fWbllP/9E@G.UgrKSN@X>#*Oqkq'0=[mIMDouNdsC?fBbOen'MW7fjiahZJK9.MG#0M1-e0V^m)Xf]DkC5l_dT04WA:0,9eX2VV9Q5eQkShk7r/Tj`=d2L\JEq/bsbDYu8X')A=[I<keDC?2UTPV4\f0>1hrap:l/[^`bkrgI8L*Z!f%:Ip8Bf?BLka5Qu5:e9]Q)&[4,0l+H8H4_K^7>^k<M9@2la10RrNkUu/k#ZgEWMdZ0ta*6WfH)M!"i8:"@P8Gj5$bm#q?k7MHWtZ>sT/_Y>b;@;IkhUOUXR#a%&MeH66`aVtPG(]%Aj\9Zje9U@Ma1CAReI`LGDaLKK6GE+M'c_h]q&Q=)QZ\'L_0CI4?0$qoJ-.8!.*\F<r2,Z,2687ttq$MT)%JC$#_Vr<Bp)^8d.(FGfYJD8Ef^'bB9necj3;>m-V-MaqGPK5mjKF_.to]7XR)7se-s3>h&Xi\ohq0__&LWB-cqV_+cU]6m,/V`N=g9"=JJ7K3PkDUQr8`SN6*n;J5f>2#/65pb*]lpiXJV.AU=Ha&>IIR'LCc!%o>WC*!d19-i3cO;^iVl!\@Ib:faA_:~>endstream
 endobj
 xref
-0 8
+0 13
 0000000000 65535 f 
-0000000009 00000 n 
-0000000106 00000 n 
-0000000169 00000 n 
-0000002666 00000 n 
-0000002792 00000 n 
-0000002951 00000 n 
-0000003077 00000 n 
+0000000061 00000 n 
+0000000122 00000 n 
+0000000229 00000 n 
+0000000341 00000 n 
+0000000456 00000 n 
+0000000661 00000 n 
+0000000738 00000 n 
+0000000943 00000 n 
+0000001012 00000 n 
+0000001312 00000 n 
+0000001378 00000 n 
+0000004117 00000 n 
 trailer
-<< /Size 8 /Root 7 0 R >>
+<<
+/ID 
+[<7d25a719f069d42543de48a0cc73f268><7d25a719f069d42543de48a0cc73f268>]
+% ReportLab generated PDF document -- digest (opensource)
+
+/Info 9 0 R
+/Root 8 0 R
+/Size 13
+>>
 startxref
-3126
+5540
 %%EOF

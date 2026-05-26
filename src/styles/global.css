@@ -1084,9 +1084,94 @@ ol {
   gap: 0.35rem;
 }
 
-.cv-contact a {
+.cv-contact a,
+.cv-contact__preview {
   font-weight: 500;
   text-decoration: underline;
+}
+
+.cv-contact__preview {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cv-contact__preview:hover {
+  color: var(--accent-deep);
+}
+
+/* CV PDF preview modal */
+
+.cv-preview-modal {
+  width: min(56rem, 96vw);
+  max-width: 96vw;
+  max-height: 92vh;
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.cv-preview-modal::backdrop {
+  background: rgb(10 10 10 / 55%);
+}
+
+.cv-preview-modal__panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  max-height: 92vh;
+}
+
+.cv-preview-modal__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cv-preview-modal__title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.cv-preview-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.cv-preview-modal__close {
+  min-height: 2.5rem;
+  padding: 0 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-alt);
+  font-family: var(--font);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cv-preview-modal__close:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface);
+}
+
+.cv-preview-modal__frame {
+  display: block;
+  width: 100%;
+  height: min(72vh, 52rem);
+  border: 0;
+  background: var(--color-bg-alt);
 }
 
 .cv-languages {

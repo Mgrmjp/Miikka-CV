@@ -43,6 +43,7 @@ export const cvSections = {
   contact: "Yhteystiedot",
   downloadPdf: "Lataa CV (PDF)",
   downloadPdfShort: "Lataa CV (PDF)",
+  previewPdf: "Esikatsele CV",
   portfolioLink: "Työnäytteet",
   problem: "Ongelma",
   work: "Mitä tein",
@@ -290,7 +291,13 @@ export const contactCta = {
     { key: "A", label: "Sähköposti", href: `mailto:${profile.email}`, primary: true },
     { key: "B", label: "LinkedIn", href: profile.linkedin, external: true },
     { key: "C", label: "GitHub", href: profile.github, external: true },
-    { key: "D", label: "Lataa CV (PDF)", href: profile.cvPath, download: true }
+    {
+      key: "D",
+      label: cvSections.previewPdf,
+      href: profile.cvPath,
+      previewModal: true
+    },
+    { key: "E", label: "Lataa CV (PDF)", href: profile.cvPath, download: true }
   ]
 } as const;
 

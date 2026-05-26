@@ -1,0 +1,18 @@
+---
+import { cvSections } from "../data/profile";
+
+type Props = {
+  label?: string;
+  class?: string;
+  size?: "sm";
+};
+
+const { label = cvSections.previewPdf, class: className, size } = Astro.props;
+---
+
+<button
+  type="button"
+  class:list={["btn", "btn--secondary", size === "sm" && "btn--sm", className]}
+  data-cv-preview-open>
+  {label}
+</button>

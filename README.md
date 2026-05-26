@@ -27,7 +27,7 @@ Static [Astro](https://astro.build/) site: Finnish portfolio homepage plus a ded
 - Node.js 20+ (LTS recommended)
 - npm
 
-Optional for PDF regeneration: Python 3 (stdlib only — no extra packages)
+Optional for PDF regeneration: Python 3 + venv (`scripts/requirements-pdf.txt`)
 
 Optional for screenshot QA: Playwright (`npx playwright install chromium`)
 
@@ -73,10 +73,12 @@ Profile image: replace `public/profile-circle.png` (also used for favicons if yo
 
 ## Regenerate CV PDF
 
-The PDF is maintained separately from Astro (hand-built PDF via stdlib, ASCII-safe fallbacks for ä/ö):
+The PDF is generated with [ReportLab](https://www.reportlab.com/) (styled layout, red header, sections — separate from the Astro site):
 
 ```sh
-python3 scripts/create_cv_pdf.py
+python3 -m venv .venv-pdf
+.venv-pdf/bin/pip install -r scripts/requirements-pdf.txt
+.venv-pdf/bin/python scripts/create_cv_pdf.py
 ```
 
 Output: `public/miikka-makela-cv.pdf`

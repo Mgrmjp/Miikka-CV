@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import CvPreviewButton from "../components/CvPreviewButton.astro";
 import ProfilePhoto from "../components/ProfilePhoto.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import {
@@ -34,6 +35,7 @@ import {
           <p class="cv-hero__intro">{cvPage.intro}</p>
           <div class="actions">
             <a class="btn btn--primary" href={profile.cvPath} download>{cvSections.downloadPdf}</a>
+            <CvPreviewButton />
             <a class="btn btn--secondary" href={profile.linkedin} rel="noreferrer" target="_blank">
               LinkedIn
             </a>
@@ -168,7 +170,13 @@ import {
         <li>{profile.location}</li>
         <li><a href={profile.linkedin} rel="noreferrer" target="_blank">LinkedIn</a></li>
         <li><a href={profile.github} rel="noreferrer" target="_blank">GitHub</a></li>
-        <li><a href={profile.cvPath} download>{cvSections.downloadPdfShort}</a></li>
+        <li>
+          <button type="button" class="cv-contact__preview" data-cv-preview-open>
+            {cvSections.previewPdf}
+          </button>
+          ·
+          <a href={profile.cvPath} download>{cvSections.downloadPdfShort}</a>
+        </li>
       </ul>
     </section>
   </main>

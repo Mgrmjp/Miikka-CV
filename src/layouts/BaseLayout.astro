@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import CvPreviewModal from "../components/CvPreviewModal.astro";
 import { profile } from "../data/profile";
 
 type Props = {
@@ -44,5 +45,6 @@ const {
   <body>
     <a class="skip-link" href="#main">Siirry sisältöön</a>
     <slot />
+    <CvPreviewModal />
   </body>
 </html>

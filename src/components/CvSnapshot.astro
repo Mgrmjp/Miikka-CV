@@ -1,5 +1,6 @@
 ---
-import { cvSnapshot, profile } from "../data/profile";
+import CvPreviewButton from "./CvPreviewButton.astro";
+import { cvSections, cvSnapshot, profile } from "../data/profile";
 ---
 
 <aside class="cv-snapshot card" aria-label="CV-yhteenveto">
@@ -13,8 +14,9 @@ import { cvSnapshot, profile } from "../data/profile";
   </ul>
   <div class="actions cv-snapshot__actions">
     <a class="btn btn--primary btn--sm" href={profile.cvPath} download>
-      Lataa CV (PDF)
+      {cvSections.downloadPdf}
     </a>
+    <CvPreviewButton size="sm" />
     <a class="btn btn--secondary btn--sm" href="/cv">Täydellinen CV</a>
   </div>
 </aside>

@@ -1,0 +1,56 @@
+---
+import { cvSections, profile } from "../data/profile";
+---
+
+<dialog id="cv-preview-modal" class="cv-preview-modal" aria-labelledby="cv-preview-title">
+  <div class="cv-preview-modal__panel">
+    <header class="cv-preview-modal__head">
+      <h2 id="cv-preview-title" class="cv-preview-modal__title">{cvSections.previewPdf}</h2>
+      <div class="cv-preview-modal__actions">
+        <a class="btn btn--ghost btn--sm" href={profile.cvPath} download>
+          {cvSections.downloadPdfShort}
+        </a>
+        <button type="button" class="cv-preview-modal__close" data-cv-preview-close aria-label="Sulje">
+          Sulje
+        </button>
+      </div>
+    </header>
+    <iframe
+      class="cv-preview-modal__frame"
+      src={profile.cvPath}
+      title={`${profile.name} — CV (PDF)`}
+      loading="lazy"></iframe>
+  </div>
+</dialog>
+
+<script>
+  function initCvPreviewModal() {
+    const dialog = document.getElementById("cv-preview-modal");
+    if (!dialog || !(dialog instanceof HTMLDialogElement)) return;
+
+    document.querySelectorAll("[data-cv-preview-open]").forEach((trigger) => {
+      if (trigger.dataset.cvPreviewBound === "true") return;
+      trigger.dataset.cvPreviewBound = "true";
+      trigger.addEventListener("click", (event) => {
+        event.preventDefault();
+        dialog.showModal();
+      });
+    });
+
+    dialog.querySelectorAll("[data-cv-preview-close]").forEach((control) => {
+      if (control.dataset.cvPreviewBound === "true") return;
+      control.dataset.cvPreviewBound = "true";
+      control.addEventListener("click", () => dialog.close());
+    });
+
+    if (dialog.dataset.cvPreviewBackdropBound !== "true") {
+      dialog.dataset.cvPreviewBackdropBound = "true";
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) dialog.close();
+      });
+    }
+  }
+
+  initCvPreviewModal();
+  document.addEventListener("astro:page-load", initCvPreviewModal);
+</script>

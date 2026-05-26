@@ -114,21 +114,30 @@ import {
       >
         <div class="actions contact-actions">
           {
-            contactCta.links.map((link) => (
-              <a
-                class:list={[
-                  "btn",
-                  link.primary && "btn--primary",
-                  !link.primary && !link.download && "btn--secondary",
-                  link.download && "btn--ghost"
-                ]}
-                href={link.href}
-                {...link.external ? { target: "_blank", rel: "noreferrer" } : {}}
-                {...link.download ? { download: true } : {}}
-              >
-                {link.label}
-              </a>
-            ))
+            contactCta.links.map((link) =>
+              link.previewModal ? (
+                <button
+                  type="button"
+                  class="btn btn--secondary"
+                  data-cv-preview-open>
+                  {link.label}
+                </button>
+              ) : (
+                <a
+                  class:list={[
+                    "btn",
+                    link.primary && "btn--primary",
+                    !link.primary && !link.download && "btn--secondary",
+                    link.download && "btn--ghost"
+                  ]}
+                  href={link.href}
+                  {...link.external ? { target: "_blank", rel: "noreferrer" } : {}}
+                  {...link.download ? { download: true } : {}}
+                >
+                  {link.label}
+                </a>
+              )
+            )
           }
         </div>
         <p class="contact-note">Vastaan yleensä arkipäivisin — ei myyntipuhetta ennen kuin näen, mitä on rikki.</p>

@@ -2,6 +2,7 @@ node_modules/
 dist/
 .astro/
 .venv-favicon/
+.venv-pdf/
 .qa-screenshots/
 .agents/
 .codex/
