@@ -18,8 +18,8 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/miikkamgr/",
   github: "https://github.com/Mgrmjp",
   cvPath: "/miikka-makela-cv.pdf",
-  avatar: "/profile-circle.png",
-  avatarPlaceholder: "/profile-circle-lq.jpg",
+  avatar: "/profile-circle.avif",
+  avatarPlaceholder: "/profile-circle-lq.avif",
   avatarAlt: "Miikka Mäkelän profiilikuva",
   metaTitle: "Miikka Mäkelä | Tuotanto, integraatiot ja WordPress",
   metaDescription:
@@ -275,8 +275,8 @@ export const personalProjects = [
   },
   {
     name: "Waves Jyväskylä",
-    url: "https://wavesjyvaskyla.fi/",
-    hostname: "wavesjyvaskyla.fi",
+    url: "https://wavesdemo.koubou.eu/",
+    hostname: "wavesdemo.koubou.eu",
     description:
       "Konttiravintola Wavesin sivusto Jyväskylän satamassa: ruokalista, lounas, tapahtumat, aukioloajat ja yhteystiedot. Kaksikielinen sivusto (fi/en).",
     tags: ["Ravintola", "Monikielinen", "SEO"]

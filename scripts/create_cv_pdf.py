@@ -134,7 +134,7 @@ PROJECTS = [
     ),
     (
         "Waves Jyväskylä",
-        "https://wavesjyvaskyla.fi/",
+        "https://wavesdemo.koubou.eu/",
         "Kaksikielinen ravintolasivusto Jyväskylän satamassa.",
     ),
     (
