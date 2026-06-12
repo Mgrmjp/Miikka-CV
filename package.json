@@ -6,15 +6,22 @@
   "scripts": {
     "dev": "astro dev --host 127.0.0.1",
     "build": "astro build",
-    "preview": "astro preview --host 127.0.0.1",
+    "preview": "npm run build && wrangler dev",
     "cv:pdf": "node scripts/generate-cv-pdf.mjs",
-    "assets:lqip": "node scripts/generate-lqip.mjs"
+    "assets:lqip": "node scripts/generate-lqip.mjs",
+    "generate-types": "wrangler types",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^13.7.0",
     "astro": "^6.3.7"
   },
   "devDependencies": {
     "playwright": "^1.51.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "wrangler": "^4.100.0"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }
