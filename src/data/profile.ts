@@ -36,8 +36,11 @@ export const quickFacts = {
   body: "Teen käytännönläheistä kehitystä WordPressin, WooCommercen, integraatioiden ja automaation ympärillä.",
   strength:
     "Vahvuuteni on epäselvien ongelmien purkaminen: mikä hajoaa, miksi se hajoaa ja miten siitä tehdään ylläpidettävämpi.",
-  tenure: "5+ vuotta tuotantoympäristöissä · Into-Digital",
   age: `${profile.age} v`,
+  experienceYears: "5+ vuotta",
+  experienceContext:
+    "Tuotantoympäristöt, ylläpito ja jatkokehitys",
+  workplace: "Into-Digital",
   location: profile.location
 } as const;
 

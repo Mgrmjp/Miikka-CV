@@ -1,6 +1,8 @@
 ---
 import Coordinates from "./Coordinates.astro";
-import { quickFacts } from "../data/profile";
+import ExternalLinkIcon from "./ExternalLinkIcon.astro";
+import NewWindowHint from "./NewWindowHint.astro";
+import { quickFacts, profile } from "../data/profile";
 ---
 
 <aside class="quick-facts card" aria-label={quickFacts.label}>
@@ -8,12 +10,55 @@ import { quickFacts } from "../data/profile";
   <p class="quick-facts__role">{quickFacts.role}</p>
   <p class="quick-facts__body">{quickFacts.body}</p>
   <p class="quick-facts__strength">{quickFacts.strength}</p>
-  <ul class="quick-facts__meta">
-    <li>{quickFacts.age}</li>
-    <li>{quickFacts.tenure}</li>
-    <li class="quick-facts__location">
-      {quickFacts.location}
-      <Coordinates class="quick-facts__coordinates" />
-    </li>
-  </ul>
+
+  <hr class="profile-facts__sep" />
+
+  <div class="profile-facts">
+    <div class="profile-facts__stats">
+      <div class="profile-facts__stat-card">
+        <span class="profile-facts__stat-value">{quickFacts.age}</span>
+        <span class="profile-facts__stat-label">Ikä</span>
+      </div>
+      <div class="profile-facts__stat-card">
+        <span class="profile-facts__stat-value">{quickFacts.experienceYears}</span>
+        <span class="profile-facts__stat-label">Kokemus</span>
+      </div>
+    </div>
+
+    <p class="profile-facts__context">{quickFacts.experienceContext}</p>
+
+    <div class="profile-facts__rows">
+      <div class="profile-facts__row">
+        <svg class="profile-facts__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M20 7h-4.17A3 3 0 0 0 13 4h-2a3 3 0 0 0-2.83 3H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z" />
+          <path d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+        </svg>
+        <div>
+          <span class="profile-facts__row-label">Työ</span>
+          <span class="profile-facts__row-value">{quickFacts.workplace}</span>
+        </div>
+      </div>
+      <div class="profile-facts__row">
+        <svg class="profile-facts__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0Z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+        <div>
+          <span class="profile-facts__row-label">Sijainti</span>
+          <span class="profile-facts__row-value">{quickFacts.location}</span>
+        </div>
+      </div>
+    </div>
+
+    <a
+      class="profile-facts__coord link-external"
+      href={profile.coordinates.mapsUrl}
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      {profile.coordinates.display}
+      <NewWindowHint />
+      <ExternalLinkIcon />
+    </a>
+  </div>
 </aside>

@@ -847,23 +847,113 @@ html.progressive-images .progressive-image.is-loaded .progressive-image__placeho
   margin-top: var(--space-sm);
 }
 
-.quick-facts__meta {
+.profile-facts__sep {
+  width: 3rem;
+  height: 1px;
+  margin: var(--space-lg) 0 var(--space-md);
+  border: 0;
+  background: var(--color-border);
+}
+
+.profile-facts {
   display: grid;
-  gap: 0.35rem;
-  margin-top: var(--space-md);
-  padding-top: var(--space-md);
-  border-top: 1px solid var(--color-border);
-  font-size: 0.875rem;
+  gap: var(--space-md);
+}
+
+.profile-facts__stats {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.profile-facts__stat-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  background: rgb(139 33 56 / 7%);
+  text-align: center;
+}
+
+.profile-facts__stat-value {
+  font-size: 1.125rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+.profile-facts__stat-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.profile-facts__context {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.profile-facts__rows {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.profile-facts__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.profile-facts__row > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.profile-facts__icon {
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
   color: var(--color-faint);
 }
 
-.quick-facts__location {
-  display: grid;
-  gap: 0.2rem;
+.profile-facts__row-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-faint);
 }
 
-.quick-facts__coordinates {
+.profile-facts__row-value {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+
+.profile-facts__coord {
   justify-self: start;
+  font-family: ui-monospace, "SFMono-Regular", "Cascadia Code", monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-faint);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  opacity: 0.65;
+}
+
+.profile-facts__coord:hover {
+  opacity: 1;
+  color: var(--accent-deep);
+  text-decoration: underline;
 }
 
 .coordinates {
