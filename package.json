@@ -11,6 +11,7 @@
     "assets:lqip": "node scripts/generate-lqip.mjs"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^13.7.0",
     "astro": "^6.3.7"
   },
   "devDependencies": {

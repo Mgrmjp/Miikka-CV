@@ -11,3 +11,4 @@ profile_circle.png
 .env
 .env.*
 !.env.example
+.wrangler/

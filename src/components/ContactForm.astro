@@ -1,0 +1,190 @@
+---
+
+/**
+ * Contact form. Posts JSON to /api/contact.
+ * Shows inline status after submit.
+ */
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<form
+  class:list={["contact-form", className]}
+  method="POST"
+  action="/api/contact"
+  data-contact-form
+>
+  <div class="contact-form__field">
+    <label class="contact-form__label" for="contact-name">Nimi</label>
+    <input
+      class="contact-form__input"
+      id="contact-name"
+      name="name"
+      type="text"
+      required
+      maxlength="200"
+      autocomplete="name"
+      placeholder="Etu- ja sukunimi"
+    />
+  </div>
+
+  <div class="contact-form__field">
+    <label class="contact-form__label" for="contact-email">Sähköposti</label>
+    <input
+      class="contact-form__input"
+      id="contact-email"
+      name="email"
+      type="email"
+      required
+      maxlength="320"
+      autocomplete="email"
+      placeholder="sahkoposti@esimerkki.fi"
+    />
+  </div>
+
+  <div class="contact-form__field">
+    <label class="contact-form__label" for="contact-message">Mistä on kyse?</label>
+    <textarea
+      class="contact-form__textarea"
+      id="contact-message"
+      name="message"
+      required
+      maxlength="5000"
+      rows="4"
+      placeholder="Kerro lyhyesti, mikä tilanne ja mitä tarvitset."
+    ></textarea>
+  </div>
+
+  <div class="contact-form__actions">
+    <button class="btn btn--primary contact-form__submit" type="submit">
+      Lähetä
+    </button>
+    <p class="contact-form__status" aria-live="polite" hidden></p>
+  </div>
+</form>
+
+<script>
+  (() => {
+    const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+    if (!form) return;
+
+    const submitBtn = form.querySelector<HTMLButtonElement>(".contact-form__submit");
+    const status = form.querySelector<HTMLElement>(".contact-form__status");
+    if (!submitBtn || !status) return;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = new FormData(form);
+      const body = JSON.stringify({
+        name: data.get("name"),
+        email: data.get("email"),
+        message: data.get("message"),
+      });
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Lähetetään…";
+      status.hidden = false;
+      status.textContent = "";
+      status.className = "contact-form__status";
+
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body,
+        });
+
+        const json = await res.json();
+
+        if (res.ok && json.ok) {
+          status.textContent = "Viesti lähetetty! Vastaan yleensä arkipäivisin.";
+          status.classList.add("contact-form__status--success");
+          form.reset();
+        } else {
+          status.textContent = json.error || "Lähetys epäonnistui. Yritä uudelleen.";
+          status.classList.add("contact-form__status--error");
+        }
+      } catch {
+        status.textContent = "Verkkovirhe. Tarkista yhteys ja yritä uudelleen.";
+        status.classList.add("contact-form__status--error");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Lähetä";
+      }
+    });
+  })();
+</script>
+
+<style>
+  .contact-form {
+    display: grid;
+    gap: var(--space-md);
+    max-width: 32rem;
+  }
+
+  .contact-form__field {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .contact-form__label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .contact-form__input,
+  .contact-form__textarea {
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    font-family: var(--font);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-ink);
+    transition: border-color 0.2s var(--ease-out);
+  }
+
+  .contact-form__input:focus,
+  .contact-form__textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgb(139 33 56 / 12%);
+  }
+
+  .contact-form__textarea {
+    resize: vertical;
+    min-height: 5rem;
+  }
+
+  .contact-form__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .contact-form__submit {
+    min-width: 8rem;
+  }
+
+  .contact-form__status {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .contact-form__status--success {
+    color: #1b7a3d;
+  }
+
+  .contact-form__status--error {
+    color: var(--accent-deep);
+  }
+</style>

@@ -1,0 +1,8 @@
+name = "miikkan-cv-summary"
+compatibility_date = "2025-06-01"
+
+d1_databases = [
+  { binding = "DB", database_name = "miikkacv-contacts", database_id = "<TODO: same D1 id as main site>" }
+]
+
+triggers = { crons = ["0 8 * * *"] }
