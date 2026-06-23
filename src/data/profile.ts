@@ -70,7 +70,7 @@ export const cvSections = {
 export const hero = {
   headline: "Full stack kehittäjä WordPressin vaikeaan päähän.",
   lead:
-    "Rakennan ja selvitän WordPress-, WooCommerce- ja integraatiopohjaisia verkkopalveluita, joissa pelkkä \"sivuston tekeminen\" ei enää riitä.",
+    "Rakennan ja selvitän WordPress-, WooCommerce- ja integraatiopohjaisia verkkopalveluita, joissa pelkkä \"sivuston tekeminen\" ei enää riitä. Liidit, maksut, varainhankinta ja kassavirta kulkee niiden kautta — jokaisen virheen hinnan näkee jossain muussa laskelmassa.",
   platformNote:
     "WordPress on usein alusta. Työ on yleensä jotain muuta: integraatioita, dataa, maksupolkuja, suorituskykyä, ylläpitoa, virhetilanteita ja ihmisten työn helpottamista.",
   thesis: {
@@ -85,7 +85,8 @@ export const hero = {
 export const credibilityBlocks = [
   "5+ vuotta liiketoimintakriittistä WordPress-tuotantoa",
   "Asiakkaita mm. World Vision Suomi, Burger King Suomi ja Plan Suomi",
-  "Integraatiot, maksut, data ja ylläpito arjen työtä, ei slidessa"
+  "Integraatiot, maksut, data ja ylläpito arjen työtä, ei slidessa",
+  "Työni vaikuttaa suoraan liidien, maksujen ja raportoinnin luotettavuuteen"
 ] as const;
 
 export const proofStrip = {
@@ -96,10 +97,12 @@ export const proofStrip = {
 export const proofPoints = [
   "Kun WooCommerce tarvitsee integraatioita",
   "Kun lomakkeet, maksut ja viennit eivät saa hukata dataa",
+  "Kun konversiot laskee mutta kukaan ei tiedä miksi",
+  "Kun liidit hukkuu lomakkeen ja CRM:n väliseen aukkoon",
   "Kun suorituskyky, välimuistit tai seuranta käyttäytyvät oudosti",
+  "Kun markkinointi ei luota raportteihin koska datat ei täsmää",
   "Kun toistuva työ pitää siirtää automaatioon",
   "Kun Staging toimii mutta Tuotanto ei",
-  "Kun data ei täsmää raporttien ja todellisuuden välillä",
   "Kun ylläpito kaipaa rakennetta eikä sammuttelua",
   "Kun tarvitaan tekijä, joka vie asian maaliin"
 ] as const;
@@ -185,7 +188,7 @@ export const stories = [
     work:
       "Yhtenäistin Lando- ja WP-CLI-pohjaisia työnkulkuja dry runeilla, varmuuskopioilla ja selkeällä polulla Local → Staging → Tuotanto.",
     outcome:
-      "Nopeampi käynnistys, vähemmän manuaalista säätöä ja vähemmän ympäristöjen välisiä yllätyksiä.",
+      "Tiimi sai uudet jäsenet nopeammin tuotantoon. Deployjen riski pieneni ja tuotanto-ongelmiin käytetty aika väheni — vähemmän seisokkia, enemmän työrauhaa.",
     tags: ["Lando", "WP-CLI", "Docker", "Bitbucket Pipelines"]
   },
   {
@@ -195,7 +198,7 @@ export const stories = [
     work:
       "Selvitin webhook-, merkintä- ja vientiketjun. Rakensin tarkistus- ja korjauslogiikkaa WP-CLI:n kautta, jotta maksetut merkinnät eivät jääneet limboon.",
     outcome:
-      "Luotettavampi maksudata ja polku, jota tiimi pystyi auditoida ilman arvailua.",
+      "Maksudata täsmää nyt Stripen, lomakkeiden ja viennin välillä ilman manuaalista tarkistusta. Tiimi luottaa raportteihin eikä tilityksiä tarvitse enää selvittää käsin.",
     tags: ["Stripe", "Gravity Forms", "WP-CLI", "WP All Export"]
   },
   {
@@ -205,7 +208,7 @@ export const stories = [
     work:
       "Jäljitin PIM-, kategoria- ja tag-ristiriidat sekä aikavyöhykkeeseen sidotun logiikan. Säädin EN/DE/FI-näkyvyyden importin ympärille.",
     outcome:
-      "Selkeä vikapolku ja prosessi, jolla tiimi pystyi diagnosoimaan ilman uutta arvailukierrosta.",
+      "Tuotteet pysyvät myynnissä kaikilla kielillä. Importti ei enää piilota varastoa eivätkä asiakkaat saa virheellisiä varastotietoja — vähemmän tukipyyntöjä, enemmän myyntiä.",
     tags: ["WooCommerce", "WP All Import", "WPML", "PIM"]
   }
 ] as const;
@@ -242,7 +245,8 @@ export const experiences = [
     bullets: [
       "Rakennan ja ylläpidän tuotannon WordPress- ja WooCommerce-palveluita ACF:n, WP-CLI:n, LiteSpeedin ja API-integraatioiden kanssa.",
       "Parannan luotettavuutta staging-käytännöillä, debuggausrutiineilla, automaatioskripteillä ja selkeällä dokumentaatiolla.",
-      "Tuettavia asiakaskriittisiä sivustoja ovat mm. World Vision Suomi, Burger King Suomi ja Plan Suomi."
+      "Tuettavia asiakaskriittisiä sivustoja ovat mm. World Vision Suomi, Burger King Suomi ja Plan Suomi.",
+      "Työni vaikuttaa suoraan siihen, että liidit, maksut ja raportointi kulkee oikein — jokainen korjaus näkyy jossain muussa laskelmassa."
     ]
   },
   {
@@ -297,7 +301,7 @@ export const featuredClients = [
     name: "World Vision Suomi",
     url: "https://www.worldvision.fi/",
     summary:
-      "Verkkopalvelun ylläpito ja jatkuva kehitys Huolenpidossa: saavutettavuus, turvallisuus ja toimintavarmuus varainhankinnan ja viestinnän tarpeisiin."
+      "Verkkopalvelun ylläpito ja jatkuva kehitys Huolenpidossa: saavutettavuus, turvallisuus ja toimintavarmuus — lahjoitusten, liidien ja viestinnän kriittisessä risteyksessä."
   },
   {
     name: "Burger King Suomi",
@@ -326,7 +330,7 @@ export const cvCaseStudies = [
       "Stripe, Gravity Forms ja WP All Export eivät aina kertoneet samaa totuutta ennen kuin raportti ajettiin.",
     work:
       "Selvitin webhook-, merkintä- ja vientiketjun. Rakensin tarkistus- ja korjauslogiikkaa WP-CLI:n kautta.",
-    result: "Luotettavampi maksudata ja auditoitava polku ilman arvailua.",
+    result: "Maksudata täsmää Stripen, lomakkeiden ja viennin välillä ilman manuaalista tarkistusta. Tiimi luottaa raportteihin ja tilitykset eivät enää vaadi selvittelyä.",
     tags: ["Stripe", "Gravity Forms", "WP-CLI", "WP All Export"]
   },
   {
@@ -335,7 +339,7 @@ export const cvCaseStudies = [
       "Projektin käynnistys ja deploy nojasivat muistiin. Sama virhe toistui Stagingissa.",
     work:
       "Yhtenäistin Lando- ja WP-CLI-työnkulut dry runeilla ja polulla Local → Staging → Tuotanto.",
-    result: "Nopeampi käynnistys ja vähemmän ympäristöjen välisiä yllätyksiä.",
+    result: "Tiimi saa uudet jäsenet nopeammin tuotantoon. Deployjen riski pieneni ja tuotanto-ongelmiin käytetty aika väheni.",
     tags: ["Lando", "WP-CLI", "Docker", "Bitbucket Pipelines"]
   },
   {
@@ -344,7 +348,7 @@ export const cvCaseStudies = [
       "Tuotteet hävisivät kieliversioista importin jälkeen tietyllä kellonajalla.",
     work:
       "Jäljitin PIM-, kategoria- ja tag-ristiriidat sekä aikavyöhykelogiikan. Säädin näkyvyyden importin ympärille.",
-    result: "Selkeä vikapolku ilman uutta arvailukierrosta.",
+    result: "Tuotteet pysyvät myynnissä kaikilla kielillä. Importti ei enää piilota varastoa — vähemmän tukipyyntöjä, enemmän myyntiä.",
     tags: ["WooCommerce", "WP All Import", "WPML", "PIM"]
   }
 ] as const;
@@ -403,7 +407,7 @@ export const rinkPlays = [
 
 export const contactCta = {
   offer:
-    "Jos sulla on WordPress- tai WooCommerce-kokonaisuus, jossa integraatioihin, suorituskykyyn tai ylläpitoon kaivataan selkeyttä, ota yhteyttä. Katsotaan ensin, voinko auttaa.",
+    "Jos sulla on WordPress- tai WooCommerce-kokonaisuus, jossa liidit, maksut tai raportointi eivät täsmää, ota yhteyttä. Tai jos integraatiot hidastavat, suorituskyky tökkii tai kukaan ei enää tiedä, mikä on rikki. Katsotaan ensin, voinko auttaa.",
   links: [
     { key: "A", label: "Sähköposti", href: `mailto:${profile.email}`, primary: true },
     { key: "B", label: "Lataa CV (PDF)", href: profile.cvPath, download: true },
