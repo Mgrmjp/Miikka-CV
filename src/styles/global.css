@@ -1302,6 +1302,8 @@ html.progressive-images .progressive-image.is-loaded .progressive-image__placeho
 }
 
 .section--contact .section__body {
+  display: grid;
+  gap: var(--space-lg);
   padding: clamp(1.75rem, 3vw, 2.5rem);
   background: linear-gradient(165deg, #fff 0%, var(--color-bg-alt) 100%);
   border: 0;
@@ -1310,11 +1312,11 @@ html.progressive-images .progressive-image.is-loaded .progressive-image__placeho
 }
 
 .contact-actions {
-  margin-top: 0;
+  margin: 0;
 }
 
 .contact-note {
-  margin-top: var(--space-md);
+  margin: 0;
   font-size: 0.875rem;
   color: var(--color-faint);
 }
