@@ -20,7 +20,7 @@ const { size = "md", class: className, alt = profile.avatarAlt } = Astro.props;
   width={1086}
   height={1086}
   loading={size === "lg" ? "eager" : "lazy"}
-  data-float
+  data-sway
 />
 
 <script>
@@ -29,24 +29,24 @@ const { size = "md", class: className, alt = profile.avatarAlt } = Astro.props;
     if (mq.matches) return;
 
     const els = document.querySelectorAll<HTMLElement>(
-      ".profile-photo[data-float]"
+      ".profile-photo[data-sway]"
     );
     if (!els.length) return;
 
     let start: number | null = null;
-    const AMPLITUDE = 4;
-    const PERIOD = 3800;
+    const AMPLITUDE = 2.5;  // degrees
+    const PERIOD = 4200;    // ms
 
-    function float(timestamp: number) {
+    function sway(timestamp: number) {
       if (start === null) start = timestamp;
       const elapsed = timestamp - start;
-      const y = Math.sin((elapsed / PERIOD) * Math.PI * 2) * AMPLITUDE;
+      const a = Math.sin((elapsed / PERIOD) * Math.PI * 2) * AMPLITUDE;
       els.forEach((el) => {
-        el.style.transform = `translateY(${y}px)`;
+        el.style.transform = `rotate(${a}deg)`;
       });
-      requestAnimationFrame(float);
+      requestAnimationFrame(sway);
     }
 
-    requestAnimationFrame(float);
+    requestAnimationFrame(sway);
   })();
 </script>
