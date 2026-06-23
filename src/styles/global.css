@@ -675,8 +675,10 @@ html.progressive-images .progressive-image.is-loaded .progressive-image__placeho
 }
 
 .hero__photo-frame {
+  position: relative;
   display: grid;
   flex-shrink: 0;
+  overflow: hidden;
   place-items: center;
   width: clamp(8.75rem, 23vw, 12rem);
   height: clamp(8.75rem, 23vw, 12rem);
@@ -692,6 +694,27 @@ html.progressive-images .progressive-image.is-loaded .progressive-image__placeho
   background-size: 220% 220%;
   animation: hero-photo-ring 10s ease-in-out infinite;
   will-change: transform, background-position;
+}
+
+.hero__photo-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgb(255 255 255 / 18%) 46%,
+    rgb(255 255 255 / 30%) 49%,
+    rgb(255 255 255 / 18%) 52%,
+    transparent 62%
+  );
+  background-size: 200% 100%;
+  background-position: 200% 0;
+  animation: hero-shine 12s ease-in-out infinite;
+  animation-delay: 4s;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .hero__photo-frame .hero__photo {
@@ -712,6 +735,19 @@ html.progressive-images .progressive-image.is-loaded .progressive-image__placeho
   box-shadow:
     0 6px 20px rgb(110 31 46 / 22%),
     0 16px 40px rgb(0 0 0 / 14%);
+}
+
+@keyframes hero-shine {
+  0%,
+  28% {
+    background-position: 200% 0;
+  }
+  35% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 @keyframes hero-photo-ring {
@@ -735,6 +771,11 @@ html.progressive-images .progressive-image.is-loaded .progressive-image__placeho
   .hero__photo-frame {
     animation: none;
     background-position: 50% 50%;
+  }
+
+  .hero__photo-frame::after {
+    animation: none;
+    background: none;
   }
 
   .hero__photo-frame .hero__photo,
