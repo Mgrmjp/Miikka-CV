@@ -29,7 +29,7 @@ const { size = "md", class: className, alt = profile.avatarAlt } = Astro.props;
     if (mq.matches) return;
 
     const els = document.querySelectorAll<HTMLElement>(
-      ".profile-photo[data-sway]"
+      ".profile-photo[data-sway]:not(.hero__photo)"
     );
     if (!els.length) return;
 
