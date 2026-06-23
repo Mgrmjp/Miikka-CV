@@ -2,14 +2,16 @@
 
 /**
  * Contact form. Posts JSON to /api/contact.
+ * Uses Cloudflare Turnstile for bot prevention.
  * Shows inline status after submit.
  */
 
 interface Props {
   class?: string;
+  turnstileSiteKey?: string;
 }
 
-const { class: className } = Astro.props;
+const { class: className, turnstileSiteKey = "0x4AAAAAAA0xEXAMPLE" } = Astro.props;
 ---
 
 <form
@@ -65,6 +67,23 @@ const { class: className } = Astro.props;
     </button>
     <p class="contact-form__status" aria-live="polite" hidden></p>
   </div>
+
+  <p class="contact-form__privacy">
+    <strong>Miten tietoja käsitellään:</strong> Nimi ja sähköposti tallennetaan
+    Cloudflare D1 -tietokantaan viestin kera. Tietoja käytetään ainoastaan
+    yhteydenottoon vastaamiseen. Niitä ei luovuteta kolmansille osapuolille.
+    Tiedot poistetaan automaattisesti 12 kuukauden jälkeen.
+    Cloudflare Turnstile suojaa lomakkeen roskapostilta
+    (<a href="https://www.cloudflare.com/en-gb/privacypolicy/" rel="noopener noreferrer" target="_blank">tietosuojaseloste</a>).
+  </p>
+
+  <div
+    class="cf-turnstile"
+    data-sitekey={turnstileSiteKey}
+    data-theme="light"
+    data-size="invisible"
+    data-callback="turnstileCallback"
+  ></div>
 </form>
 
 <script>
@@ -74,16 +93,78 @@ const { class: className } = Astro.props;
 
     const submitBtn = form.querySelector<HTMLButtonElement>(".contact-form__submit");
     const status = form.querySelector<HTMLElement>(".contact-form__status");
-    if (!submitBtn || !status) return;
+    const turnstileDiv = form.querySelector<HTMLElement>(".cf-turnstile");
+    if (!submitBtn || !status || !turnstileDiv) return;
+
+    // Load Turnstile script once
+    if (!document.querySelector('script[src*="turnstile"]')) {
+      const s = document.createElement("script");
+      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=_turnstileLoaded&render=explicit";
+      s.async = true;
+      s.defer = true;
+      document.head.appendChild(s);
+    }
+
+    // Widget ID for this form
+    let widgetId: string | null = null;
+    let turnstileReady = false;
+
+    (window as any)._turnstileLoaded = () => {
+      turnstileReady = true;
+      if (turnstileDiv) {
+        widgetId = (window as any).turnstile.render(turnstileDiv, {
+          sitekey: turnstileDiv.getAttribute("data-sitekey"),
+          callback: () => {
+            // token acquired, will be submitted with form
+          },
+        });
+      }
+    };
+
+    // Retry if script fires callback before we set it
+    if ((window as any).turnstile) {
+      turnstileReady = true;
+      if (turnstileDiv && !widgetId) {
+        widgetId = (window as any).turnstile.render(turnstileDiv, {
+          sitekey: turnstileDiv.getAttribute("data-sitekey"),
+          callback: () => {},
+        });
+      }
+    }
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      // Ensure Turnstile token
+      if (!widgetId || !(window as any).turnstile) {
+        status.hidden = false;
+        status.textContent = "Turvatarkistus ei ole vielä valmis. Yritä hetken kuluttua.";
+        status.classList.add("contact-form__status--error");
+        return;
+      }
+
+      const token = (window as any).turnstile.getResponse(widgetId);
+      if (!token) {
+        // Trigger invisible challenge
+        (window as any).turnstile.execute(widgetId);
+        // Wait briefly for token, then try again
+        await new Promise((r) => setTimeout(r, 1500));
+      }
+
+      const tokenFinal = (window as any).turnstile.getResponse(widgetId);
+      if (!tokenFinal) {
+        status.hidden = false;
+        status.textContent = "Turvatarkistus epäonnistui. Päivitä sivu ja yritä uudelleen.";
+        status.classList.add("contact-form__status--error");
+        return;
+      }
 
       const data = new FormData(form);
       const body = JSON.stringify({
         name: data.get("name"),
         email: data.get("email"),
         message: data.get("message"),
+        turnstileToken: tokenFinal,
       });
 
       submitBtn.disabled = true;
@@ -105,13 +186,17 @@ const { class: className } = Astro.props;
           status.textContent = "Viesti lähetetty! Vastaan yleensä arkipäivisin.";
           status.classList.add("contact-form__status--success");
           form.reset();
+          // Reset Turnstile for next submission
+          (window as any).turnstile.reset(widgetId);
         } else {
           status.textContent = json.error || "Lähetys epäonnistui. Yritä uudelleen.";
           status.classList.add("contact-form__status--error");
+          (window as any).turnstile.reset(widgetId);
         }
       } catch {
         status.textContent = "Verkkovirhe. Tarkista yhteys ja yritä uudelleen.";
         status.classList.add("contact-form__status--error");
+        (window as any).turnstile.reset(widgetId);
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = "Lähetä";
@@ -186,5 +271,30 @@ const { class: className } = Astro.props;
 
   .contact-form__status--error {
     color: var(--accent-deep);
+  }
+
+  .contact-form__privacy {
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.55;
+    color: var(--color-faint);
+  }
+
+  .contact-form__privacy a {
+    color: var(--color-faint);
+    text-decoration: underline;
+    text-underline-offset: 0.14em;
+  }
+
+  .contact-form__privacy a:hover {
+    color: var(--accent-deep);
+  }
+
+  .cf-turnstile {
+    position: absolute;
+    left: -9999px;
+    width: 0;
+    height: 0;
+    overflow: hidden;
   }
 </style>
