@@ -691,6 +691,7 @@ html.progressive-images .progressive-image.is-loaded .progressive-image__placeho
   );
   background-size: 220% 220%;
   animation: hero-photo-ring 10s ease-in-out infinite;
+  will-change: transform, background-position;
 }
 
 .hero__photo-frame .hero__photo {

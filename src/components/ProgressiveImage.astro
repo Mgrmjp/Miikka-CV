@@ -3,6 +3,7 @@ type Props = {
   src: string;
   placeholderSrc: string;
   alt: string;
+  webpSrc?: string;
   width?: number;
   height?: number;
   loading?: "lazy" | "eager";
@@ -13,17 +14,19 @@ const {
   src,
   placeholderSrc,
   alt,
+  webpSrc,
   width,
   height,
   loading = "lazy",
-  class: className
+  class: className,
+  ...rest
 } = Astro.props;
 
 const markLoaded =
   "this.closest('[data-progressive-image]')?.classList.add('is-loaded')";
 ---
 
-<span class:list={["progressive-image", className]} data-progressive-image>
+<span class:list={["progressive-image", className]} data-progressive-image {...rest}>
   <img
     class="progressive-image__placeholder"
     src={placeholderSrc}
@@ -33,15 +36,18 @@ const markLoaded =
     height={height}
     decoding="async"
   />
-  <img
-    class="progressive-image__full"
-    src={src}
-    alt={alt}
-    width={width}
-    height={height}
-    loading={loading}
-    decoding="async"
-    onload={markLoaded}
-    onerror={markLoaded}
-  />
+  <picture>
+    {webpSrc && <source srcset={webpSrc} type="image/webp" />}
+    <img
+      class="progressive-image__full"
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      loading={loading}
+      decoding="async"
+      onload={markLoaded}
+      onerror={markLoaded}
+    />
+  </picture>
 </span>

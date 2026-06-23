@@ -15,8 +15,38 @@ const { size = "md", class: className, alt = profile.avatarAlt } = Astro.props;
   class:list={["profile-photo", `profile-photo--${size}`, className]}
   src={profile.avatar}
   placeholderSrc={profile.avatarPlaceholder}
+  webpSrc={profile.avatarWebp}
   alt={alt}
   width={1086}
   height={1086}
   loading={size === "lg" ? "eager" : "lazy"}
+  data-float
 />
+
+<script>
+  (() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) return;
+
+    const els = document.querySelectorAll<HTMLElement>(
+      ".profile-photo[data-float]"
+    );
+    if (!els.length) return;
+
+    let start: number | null = null;
+    const AMPLITUDE = 4;
+    const PERIOD = 3800;
+
+    function float(timestamp: number) {
+      if (start === null) start = timestamp;
+      const elapsed = timestamp - start;
+      const y = Math.sin((elapsed / PERIOD) * Math.PI * 2) * AMPLITUDE;
+      els.forEach((el) => {
+        el.style.transform = `translateY(${y}px)`;
+      });
+      requestAnimationFrame(float);
+    }
+
+    requestAnimationFrame(float);
+  })();
+</script>

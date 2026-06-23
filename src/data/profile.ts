@@ -18,8 +18,9 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/miikkamgr/",
   github: "https://github.com/Mgrmjp",
   cvPath: "/miikka-makela-cv.pdf",
-  avatar: "/profile-circle.avif",
-  avatarPlaceholder: "/profile-circle-lq.avif",
+  avatar: "/poekemecircle.avif",
+  avatarWebp: "/poekemecircle.webp",
+  avatarPlaceholder: "/poekemecircle-lq.webp",
   avatarAlt: "Miikka Mäkelän profiilikuva",
   metaTitle: "Miikka Mäkelä | Tuotanto, integraatiot ja WordPress",
   metaDescription:
