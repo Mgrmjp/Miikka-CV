@@ -141,29 +141,53 @@ import {
         intro={contactCta.offer}
         variant="contact"
       >
-        <div class="actions contact-actions">
-          {
-            contactCta.links.map((link) => (
-              <a
-                class:list={[
-                  "btn",
-                  link.primary && "btn--primary",
-                  !link.primary && !link.download && "btn--secondary",
-                  link.download && "btn--secondary",
-                  link.external && "link-external"
-                ]}
-                href={link.href}
-                {...link.external ? { target: "_blank", rel: "noopener noreferrer" } : {}}
-                {...link.download ? { download: true } : {}}
-              >
-                {link.label}
-                {link.external ? <NewWindowHint /> : null}
-              </a>
-            ))
-          }
+        <div class="contact-panel">
+          <div class="contact-panel__main">
+            <p class="contact-panel__form-title">Lähetä viesti</p>
+            <ContactForm turnstileSiteKey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAAA0xEXAMPLE"} />
+          </div>
+          <aside class="contact-panel__info">
+            <div class="contact-panel__actions">
+              {
+                contactCta.links.map((link) => (
+                  <a
+                    class:list={[
+                      "contact-panel__action",
+                      link.key === "A" && "contact-panel__action--active"
+                    ]}
+                    href={link.href}
+                    {...link.external ? { target: "_blank", rel: "noopener noreferrer" } : {}}
+                    {...link.download ? { download: true } : {}}
+                  >
+                    {link.label}
+                    {link.external ? <NewWindowHint /> : null}
+                  </a>
+                ))
+              }
+            </div>
+
+            <div class="contact-panel__situations">
+              <p class="contact-panel__situations-title">
+                Millaisissa tilanteissa voin auttaa?
+              </p>
+              <ul class="contact-panel__checklist">
+                <li>WordPress tai WooCommerce hajoaa</li>
+                <li>Integraatio ei liiku</li>
+                <li>Maksut, liidit tai raportointi eivät täsmää</li>
+                <li>Suorituskyky tökkii</li>
+                <li>Kukaan ei enää tiedä, mikä on rikki</li>
+              </ul>
+            </div>
+
+            <div class="contact-panel__note">
+              <p>Vastaan yleensä arkipäivisin. Ei myyntipuhetta ennen kuin näen, mikä on rikki.</p>
+            </div>
+          </aside>
         </div>
-        <ContactForm turnstileSiteKey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAAA0xEXAMPLE"} />
-        <p class="contact-note">Vastaan yleensä arkipäivisin. Ei myyntipuhetta ennen kuin näen, mitä on rikki.</p>
+        <div class="contact-panel__footer">
+          <span>Vastaan yleensä arkipäivisin.</span>
+          <a href="/tietosuoja" class="contact-panel__footer-link">Tietosuojaseloste</a>
+        </div>
       </Section>
     </div>
   </main>

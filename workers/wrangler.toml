@@ -2,7 +2,7 @@ name = "miikkan-cv-summary"
 compatibility_date = "2025-06-01"
 
 d1_databases = [
-  { binding = "DB", database_name = "miikkacv-contacts", database_id = "<TODO: same D1 id as main site>" }
+  { binding = "DB", database_name = "miikkacv-contacts", database_id = "71637b51-dc81-47ab-8be1-1d50a22c85d3" }
 ]
 
 triggers = { crons = ["0 8 * * *"] }

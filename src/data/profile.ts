@@ -412,10 +412,10 @@ export const contactCta = {
   offer:
     "Jos sulla on WordPress- tai WooCommerce-kokonaisuus, jossa liidit, maksut tai raportointi eivät täsmää, ota yhteyttä. Tai jos integraatiot hidastavat, suorituskyky tökkii tai kukaan ei enää tiedä, mikä on rikki. Katsotaan ensin, voinko auttaa.",
   links: [
-    { key: "A", label: "Sähköposti", href: `mailto:${profile.email}`, primary: true },
-    { key: "B", label: "Lataa CV (PDF)", href: profile.cvPath, download: true },
-    { key: "C", label: "LinkedIn", href: profile.linkedin, external: true },
-    { key: "D", label: "GitHub", href: profile.github, external: true }
+    { key: "A", label: "Sähköposti", href: `mailto:${profile.email}` },
+    { key: "B", label: "LinkedIn", href: profile.linkedin, external: true },
+    { key: "C", label: "GitHub", href: profile.github, external: true },
+    { key: "D", label: "Lataa CV (PDF)", href: profile.cvPath, download: true }
   ]
 } as const;
 

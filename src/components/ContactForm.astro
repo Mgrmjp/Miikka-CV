@@ -1,11 +1,5 @@
 ---
 
-/**
- * Contact form. Posts JSON to /api/contact.
- * Uses Cloudflare Turnstile for bot prevention.
- * Shows inline status after submit.
- */
-
 interface Props {
   class?: string;
   turnstileSiteKey?: string;
@@ -69,12 +63,9 @@ const { class: className, turnstileSiteKey = "0x4AAAAAAA0xEXAMPLE" } = Astro.pro
   </div>
 
   <p class="contact-form__privacy">
-    <strong>Miten tietoja käsitellään:</strong> Nimi ja sähköposti tallennetaan
-    Cloudflare D1 -tietokantaan viestin kera. Tietoja käytetään ainoastaan
-    yhteydenottoon vastaamiseen. Niitä ei luovuteta kolmansille osapuolille.
-    Tiedot poistetaan automaattisesti 12 kuukauden jälkeen.
-    Cloudflare Turnstile suojaa lomakkeen roskapostilta
-    (<a href="https://www.cloudflare.com/en-gb/privacypolicy/" rel="noopener noreferrer" target="_blank">tietosuojaseloste</a>).
+    Nimi ja sähköposti tallennetaan viestin kera. Vain vastaamiseen.
+    Poistuu automaattisesti 12 kk jälkeen.
+    Turnstile suojaa roskapostilta.
   </p>
 
   <div
@@ -96,7 +87,6 @@ const { class: className, turnstileSiteKey = "0x4AAAAAAA0xEXAMPLE" } = Astro.pro
     const turnstileDiv = form.querySelector<HTMLElement>(".cf-turnstile");
     if (!submitBtn || !status || !turnstileDiv) return;
 
-    // Load Turnstile script once
     if (!document.querySelector('script[src*="turnstile"]')) {
       const s = document.createElement("script");
       s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=_turnstileLoaded&render=explicit";
@@ -105,25 +95,18 @@ const { class: className, turnstileSiteKey = "0x4AAAAAAA0xEXAMPLE" } = Astro.pro
       document.head.appendChild(s);
     }
 
-    // Widget ID for this form
     let widgetId: string | null = null;
-    let turnstileReady = false;
 
     (window as any)._turnstileLoaded = () => {
-      turnstileReady = true;
       if (turnstileDiv) {
         widgetId = (window as any).turnstile.render(turnstileDiv, {
           sitekey: turnstileDiv.getAttribute("data-sitekey"),
-          callback: () => {
-            // token acquired, will be submitted with form
-          },
+          callback: () => {},
         });
       }
     };
 
-    // Retry if script fires callback before we set it
     if ((window as any).turnstile) {
-      turnstileReady = true;
       if (turnstileDiv && !widgetId) {
         widgetId = (window as any).turnstile.render(turnstileDiv, {
           sitekey: turnstileDiv.getAttribute("data-sitekey"),
@@ -135,7 +118,6 @@ const { class: className, turnstileSiteKey = "0x4AAAAAAA0xEXAMPLE" } = Astro.pro
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // Ensure Turnstile token
       if (!widgetId || !(window as any).turnstile) {
         status.hidden = false;
         status.textContent = "Turvatarkistus ei ole vielä valmis. Yritä hetken kuluttua.";
@@ -143,11 +125,9 @@ const { class: className, turnstileSiteKey = "0x4AAAAAAA0xEXAMPLE" } = Astro.pro
         return;
       }
 
-      const token = (window as any).turnstile.getResponse(widgetId);
+      let token = (window as any).turnstile.getResponse(widgetId);
       if (!token) {
-        // Trigger invisible challenge
         (window as any).turnstile.execute(widgetId);
-        // Wait briefly for token, then try again
         await new Promise((r) => setTimeout(r, 1500));
       }
 
@@ -186,7 +166,6 @@ const { class: className, turnstileSiteKey = "0x4AAAAAAA0xEXAMPLE" } = Astro.pro
           status.textContent = "Viesti lähetetty! Vastaan yleensä arkipäivisin.";
           status.classList.add("contact-form__status--success");
           form.reset();
-          // Reset Turnstile for next submission
           (window as any).turnstile.reset(widgetId);
         } else {
           status.textContent = json.error || "Lähetys epäonnistui. Yritä uudelleen.";
@@ -209,7 +188,6 @@ const { class: className, turnstileSiteKey = "0x4AAAAAAA0xEXAMPLE" } = Astro.pro
   .contact-form {
     display: grid;
     gap: var(--space-md);
-    max-width: 32rem;
   }
 
   .contact-form__field {
@@ -276,18 +254,8 @@ const { class: className, turnstileSiteKey = "0x4AAAAAAA0xEXAMPLE" } = Astro.pro
   .contact-form__privacy {
     margin: 0;
     font-size: 0.75rem;
-    line-height: 1.55;
+    line-height: 1.5;
     color: var(--color-faint);
-  }
-
-  .contact-form__privacy a {
-    color: var(--color-faint);
-    text-decoration: underline;
-    text-underline-offset: 0.14em;
-  }
-
-  .contact-form__privacy a:hover {
-    color: var(--accent-deep);
   }
 
   .cf-turnstile {

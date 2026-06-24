@@ -4,6 +4,23 @@ export const prerender = false;
 
 const TURNSTILE_VERIFY = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
+// Per-IP rate limiter: max 5 POSTs per 60s window
+const rateLimit = new Map<string, { count: number; resetAt: number }>();
+const RATE_MAX = 5;
+const RATE_WINDOW_MS = 60_000;
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimit.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimit.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_MAX) return false;
+  entry.count++;
+  return true;
+}
+
 async function verifyTurnstile(token: string, secret: string): Promise<boolean> {
   try {
     const res = await fetch(TURNSTILE_VERIFY, {
@@ -20,6 +37,15 @@ async function verifyTurnstile(token: string, secret: string): Promise<boolean> 
 
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
+    // Rate limit by IP
+    const clientIp = request.headers.get("CF-Connecting-IP") || "unknown";
+    if (!checkRateLimit(clientIp)) {
+      return new Response(
+        JSON.stringify({ error: "Liian monta yritystä. Yritä hetken kuluttua uudelleen." }),
+        { status: 429, headers: { "content-type": "application/json" } }
+      );
+    }
+
     const body = await request.json();
     const { name, email, message, turnstileToken } = body;
 

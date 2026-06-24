@@ -1311,14 +1311,153 @@ html.progressive-images .progressive-image.is-loaded .progressive-image__placeho
   box-shadow: var(--shadow-lg);
 }
 
-.contact-actions {
+/* ── Contact panel: two-column form + info ── */
+
+.contact-panel {
+  display: grid;
+  grid-template-columns: 1fr 16rem;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+.contact-panel__main {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.contact-panel__form-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.contact-panel__info {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.contact-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.contact-panel__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 2.25rem;
+  padding: 0 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-family: var(--font);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.2s var(--ease-out), color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+  box-shadow: none;
+}
+
+.contact-panel__action:hover {
+  border-color: var(--color-border-accent);
+  background: rgb(139 33 56 / 4%);
+  color: var(--accent-deep);
+}
+
+.contact-panel__action--active {
+  border-color: var(--accent);
+  background: rgb(139 33 56 / 7%);
+  color: var(--accent-deep);
+  font-weight: 700;
+}
+
+.contact-panel__action--active:hover {
+  border-color: var(--accent-deep);
+  background: rgb(139 33 56 / 10%);
+}
+
+.contact-panel__action .external-link-icon {
+  width: 0.75em;
+  height: 0.75em;
+}
+
+.contact-panel__situations-title {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.contact-panel__checklist {
+  display: grid;
+  gap: 0.4rem;
+  margin: var(--space-sm) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact-panel__checklist li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.contact-panel__checklist li::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 0.5em;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+.contact-panel__note {
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: rgb(139 33 56 / 5%);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--color-muted);
+}
+
+.contact-panel__note p {
   margin: 0;
 }
 
-.contact-note {
-  margin: 0;
-  font-size: 0.875rem;
+.contact-panel__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  padding-top: var(--space-sm);
+  font-size: 0.75rem;
   color: var(--color-faint);
+}
+
+.contact-panel__footer-link {
+  color: var(--color-faint);
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+.contact-panel__footer-link:hover {
+  color: var(--accent-deep);
+}
+
+@media (max-width: 768px) {
+  .contact-panel {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
 }
 
 /* Story grid: showcase cards */

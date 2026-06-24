@@ -5,7 +5,7 @@
     {
       "binding": "DB",
       "database_name": "miikkacv-contacts",
-      "database_id": "<TODO: create via wrangler d1 create miikkacv-contacts>"
+      "database_id": "71637b51-dc81-47ab-8be1-1d50a22c85d3"
     }
   ]
 }
