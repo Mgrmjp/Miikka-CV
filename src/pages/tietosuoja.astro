@@ -1,0 +1,121 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Section from "../components/Section.astro";
+import FooterViz from "../components/FooterViz.astro";
+import { navPortfolio, profile } from "../data/profile";
+---
+
+<BaseLayout title={`Tietosuojaseloste – ${profile.name}`} description="Tietosuojaseloste ja henkilötietojen käsittely Miikka Mäkelän verkkosivustolla.">
+  <SiteHeader navItems={navPortfolio} ctaVariant="secondary" />
+
+  <main id="main">
+    <div class="container prose">
+      <Section id="tietosuoja" label="Tietosuoja" title="Tietosuojaseloste">
+        <p class="lede">Tämä tietosuojaseloste koskee verkkosivustolla <a href="https://miikkama.work">miikkama.work</a> kerättäviä henkilötietoja. Sivuston ylläpitäjä on <strong>{profile.name}</strong>.</p>
+
+        <h2>1. Rekisterinpitäjä</h2>
+        <p>
+          {profile.name}<br />
+          Sähköposti: <a href={`mailto:${profile.email}`}>{profile.email}</a>
+        </p>
+
+        <h2>2. Mitä tietoja kerätään ja miksi</h2>
+
+        <h3>Yhteydenottolomake</h3>
+        <p>Kun lähetät viestin yhteydenottolomakkeella, tallennetaan seuraavat tiedot:</p>
+        <ul>
+          <li><strong>Nimi</strong> – käytetään sinua puhutellessa vastauksessa</li>
+          <li><strong>Sähköpostiosoite</strong> – käytetään vastaamiseen</li>
+          <li><strong>Viesti</strong> – yhteydenoton sisältö</li>
+        </ul>
+
+        <h3>Cloudflare Turnstile</h3>
+        <p>Lomake käyttää Cloudflare Turnstile <em>invisible</em> -widgetiä roskapostin estoon. Turnstile tarkistaa selaimen käyttäytymisen perusteella, onko käyttäjä ihminen. Tämä tapahtuu ilman evästeitä eikä vaadi käyttäjältä toimenpiteitä. Turnstilen tietosuojaseloste: <a href="https://www.cloudflare.com/en-gb/privacypolicy/" rel="noopener noreferrer" target="_blank">Cloudflare Privacy Policy</a>.</p>
+
+        <h2>3. Säilytysaika</h2>
+        <p>Tiedot poistetaan automaattisesti 12 kuukauden kuluttua yhteydenotosta. Tämän jälkeen viestiä, nimeä tai sähköpostiosoitetta ei ole enää tietokannassa.</p>
+
+        <h2>4. Tietojen luovutus kolmansille osapuolille</h2>
+        <p>Henkilötietoja <strong>ei luovuteta</strong> kolmansille osapuolille. Tietoja käytetään ainoastaan yhteydenottoon vastaamiseen.</p>
+
+        <h2>5. Tekniset tietovarastot</h2>
+        <p>Yhteydenottolomakkeen tiedot tallennetaan <strong>Cloudflare D1</strong> -tietokantaan (EU-alue). Sivusto on hostattu <strong>Cloudflare Workers</strong> -alustalla. Sivuston liikenne on salattu (HTTPS).</p>
+
+        <h2>6. Evästeet</h2>
+        <p>Sivusto ei asenna evästeitä eikä kolmannen osapuolen seurantaa. Cloudflare saattaa asettaa teknisesti välttämättömiä evästeitä osana CDN-palveluaan.</p>
+
+        <h2>7. Oikeutesi</h2>
+        <p>Sinulla on oikeus:</p>
+        <ul>
+          <li>saada pääsyn itseäsi koskeviin henkilötietoihin</li>
+          <li>pyytää tietojesi oikaisua tai poistoa</li>
+          <li>rajoittaa tietojesi käsittelyä</li>
+          <li>tehdä valitus valvontaviranomaiselle (tietosuojavaltuutettu)</li>
+        </ul>
+        <p>Yhteydenotot tietosuoja-asioissa: <a href={`mailto:${profile.email}`}>{profile.email}</a></p>
+
+        <h2>8. Selosteen päivitys</h2>
+        <p>Tämä tietosuojaseloste on viimeksi päivitetty 24.6.2026.</p>
+      </Section>
+    </div>
+  </main>
+
+  <FooterViz />
+</BaseLayout>
+
+<style>
+  .prose {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: var(--space-2xl) 0 var(--space-3xl);
+  }
+
+  .prose h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+    margin: 0 0 var(--space-xs);
+  }
+
+  .prose .lede {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-xl);
+  }
+
+  .prose h2 {
+    font-size: 1.25rem;
+    margin: var(--space-2xl) 0 var(--space-sm);
+  }
+
+  .prose h3 {
+    font-size: 1rem;
+    margin: var(--space-lg) 0 var(--space-xs);
+  }
+
+  .prose p {
+    margin: 0 0 var(--space-md);
+    line-height: 1.7;
+  }
+
+  .prose ul {
+    margin: 0 0 var(--space-md);
+    padding-left: 1.5rem;
+  }
+
+  .prose li {
+    margin-bottom: 0.25rem;
+    line-height: 1.6;
+  }
+
+  .prose a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose strong {
+    color: var(--color-ink);
+  }
+</style>
