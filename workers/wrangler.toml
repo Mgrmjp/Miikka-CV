@@ -1,4 +1,5 @@
 name = "miikkan-cv-summary"
+main = "daily-summary.ts"
 compatibility_date = "2025-06-01"
 
 d1_databases = [
