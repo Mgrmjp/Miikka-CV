@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { env } from "cloudflare:workers";
 
 export const prerender = false;
 
@@ -35,7 +36,7 @@ async function verifyTurnstile(token: string, secret: string): Promise<boolean> 
   }
 }
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   try {
     // Rate limit by IP
     const clientIp = request.headers.get("CF-Connecting-IP") || "unknown";
@@ -71,7 +72,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     // Verify Turnstile token
-    const secret = locals.runtime.env.TURNSTILE_SECRET_KEY;
+    const secret = env.TURNSTILE_SECRET_KEY;
     if (!secret) {
       console.error("TURNSTILE_SECRET_KEY not configured");
       return new Response(
@@ -95,7 +96,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
 
-    const db = locals.runtime.env.DB;
+    const db = env.DB;
     await db
       .prepare("INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)")
       .bind(name.trim(), email.trim(), message.trim())

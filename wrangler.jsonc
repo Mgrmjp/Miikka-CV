@@ -7,5 +7,10 @@
       "database_name": "miikkacv-contacts",
       "database_id": "71637b51-dc81-47ab-8be1-1d50a22c85d3"
     }
-  ]
+  ],
+  "routes": [
+    { "pattern": "miikkama.work", "zone_name": "miikkama.work" },
+    { "pattern": "miikkama.work/*", "zone_name": "miikkama.work" }
+  ],
+  "workers_dev": true
 }
