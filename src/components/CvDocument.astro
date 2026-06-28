@@ -7,7 +7,6 @@ import Coordinates from "./Coordinates.astro";
 import CvPreviewButton from "./CvPreviewButton.astro";
 import ProfilePhoto from "./ProfilePhoto.astro";
 import {
-  about,
   cvCaseStudies,
   cvPage,
   cvSections,
@@ -107,6 +106,7 @@ const { printable = false } = Astro.props;
 
   <section class="cv-block" aria-labelledby="cv-clients">
     <h2 id="cv-clients" class="cv-block__title">{cvSections.clients}</h2>
+    <p class="cv-block__note">{cvSections.clientsNote}</p>
     <div class="cv-clients">
       {
         featuredClients.map((client) => (
@@ -227,7 +227,6 @@ const { printable = false } = Astro.props;
 
   <section class="cv-block" aria-labelledby="cv-interests">
     <h2 id="cv-interests" class="cv-block__title">{cvSections.interests}</h2>
-    <p class="cv-interests">{about.interestsBlurb}</p>
     <ul class="interest-row interest-row--cv" aria-label="Kiinnostuksen kohteet">
       {interests.map((item) => <li>{item}</li>)}
     </ul>

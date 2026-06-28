@@ -12,24 +12,25 @@ type Props = {
 };
 
 const { name, url, hostname, description, tags } = Astro.props;
-const tagLine = tags.join(" · ");
 ---
 
-<article class="project-row">
-  <div class="project-row__main">
-    <h3 class="project-row__title">
+<article class="project-card">
+  <div class="project-card__main">
+    <h3 class="project-card__title">
       <a class="link-external" href={url} rel="noopener noreferrer" target="_blank">
         {name}
         <NewWindowHint />
         <ExternalLinkIcon />
       </a>
     </h3>
-    <p class="project-row__host">{hostname}</p>
-    <p class="project-row__desc">{description}</p>
+    <p class="project-card__host">{hostname}</p>
+    <p class="project-card__desc">{description}</p>
   </div>
-  <div class="project-row__aside">
-    <p class="project-row__meta">{tagLine}</p>
-    <a class="project-row__cta link-external" href={url} rel="noopener noreferrer" target="_blank">
+  <div class="project-card__foot">
+    <ul class="project-card__tags" aria-label="Teknologiat">
+      {tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+    <a class="project-card__cta link-external" href={url} rel="noopener noreferrer" target="_blank">
       {cvSections.openSite}
       <NewWindowHint />
       <ExternalLinkIcon />

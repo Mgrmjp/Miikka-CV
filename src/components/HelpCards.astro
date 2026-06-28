@@ -1,0 +1,14 @@
+---
+import { helpCards } from "../data/profile";
+---
+
+<div class="help-grid">
+  {
+    helpCards.map((card) => (
+      <article class="help-card">
+        <h3 class="help-card__title">{card.title}</h3>
+        <p class="help-card__body">{card.body}</p>
+      </article>
+    ))
+  }
+</div>

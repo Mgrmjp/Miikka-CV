@@ -1,22 +1,21 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import FooterViz from "../components/FooterViz.astro";
-import CompanyLink from "../components/CompanyLink.astro";
 import Hero from "../components/Hero.astro";
-import ProofStrip from "../components/ProofStrip.astro";
+import HelpCards from "../components/HelpCards.astro";
 import TechnicalCoreSection from "../components/TechnicalCoreSection.astro";
 import NewWindowHint from "../components/NewWindowHint.astro";
 import Section from "../components/Section.astro";
 import SiteHeader from "../components/SiteHeader.astro";
-import ProjectCard from "../components/ProjectCard.astro";
 import StoryArticle from "../components/StoryArticle.astro";
+import ProjectCard from "../components/ProjectCard.astro";
 import ContactForm from "../components/ContactForm.astro";
 import {
   about,
-  interests,
   contactCta,
-  cvSections,
   experiences,
+  helpSection,
+  interests,
   navPortfolio,
   personalProjects,
   personalProjectsSection,
@@ -37,8 +36,15 @@ import {
       <Hero />
     </div>
 
-    <div class="proof-strips">
-      <ProofStrip />
+    <div class="container">
+      <section class="help-section" id="apua" aria-labelledby="apua-title">
+        <header class="help-section__head">
+          <p class="eyebrow">{helpSection.label}</p>
+          <h2 id="apua-title">{helpSection.title}</h2>
+          <p class="help-section__intro">{helpSection.intro}</p>
+        </header>
+        <HelpCards />
+      </section>
     </div>
 
     <div class="case-band">
@@ -79,18 +85,26 @@ import {
         title={portfolio.experienceSection.title}
         intro={portfolio.experienceSection.intro}
       >
-        <div class="experience-list">
+        <div class="timeline">
           {
             experiences.map((job) => (
-              <article class="experience-card card">
-                <CompanyLink name={job.company} url={job.url} />
-                <p class="experience-card__role">{job.role}</p>
-                <p class="experience-card__period">
-                  {job.period} · {job.location}
-                </p>
-                <ul>
-                  {job.bullets.map((item) => <li>{item}</li>)}
-                </ul>
+              <article class="timeline__item">
+                <span class="timeline__dot" aria-hidden="true" />
+                <div class="timeline__body">
+                  <h3 class="timeline__role">{job.role}</h3>
+                  <p class="timeline__meta">
+                    <a class="timeline__company" href={job.url} rel="noopener noreferrer" target="_blank">
+                      {job.company}
+                    </a>
+                    <span class="timeline__sep">·</span>
+                    <span>{job.period}</span>
+                    <span class="timeline__sep">·</span>
+                    <span>{job.location}</span>
+                  </p>
+                  <ul class="timeline__bullets">
+                    {job.bullets.map((item) => <li>{item}</li>)}
+                  </ul>
+                </div>
               </article>
             ))
           }
@@ -103,7 +117,7 @@ import {
         title={personalProjectsSection.title}
         intro={personalProjectsSection.intro}
       >
-        <div class="project-list">
+        <div class="project-grid">
           {
             personalProjects.map((project) => (
               <ProjectCard
@@ -118,77 +132,53 @@ import {
         </div>
       </Section>
 
-      <Section id="mina" label="Tausta" title={about.title} intro={profile.positioning}>
-        <p class="about-short">{about.short}</p>
-        {
-          about.paragraphs.map((p) => (
-            <p class="about-short">{p}</p>
-          ))
-        }
-        <p class="about-short">{about.interestsBlurb}</p>
-        <ul class="interest-row" aria-label="Kiinnostuksen kohteet">
-          {interests.map((item) => <li>{item}</li>)}
-        </ul>
-        <p class="about-short about-short--link">
-          <a href="/cv">Ansioluettelo</a>: kokemus, asiakastyö, koulutus ja kielet.
-        </p>
+      <Section id="mina" label="Tausta" title={about.title}>
+        <div class="about-body">
+          {about.paragraphs.map((p) => <p class="about-short">{p}</p>)}
+          <ul class="interest-row" aria-label="Kiinnostuksen kohteet">
+            {interests.map((item) => <li>{item}</li>)}
+          </ul>
+          <p class="about-short about-short--link">
+            <a href="/cv">Ansioluettelo</a>: kokemus, asiakastyö, koulutus ja kielet.
+          </p>
+        </div>
       </Section>
+    </div>
 
-      <Section
-        id="yhteys"
-        label="Yhteys"
-        title="Kerro, mikä sotku sulla on"
-        intro={contactCta.offer}
-        variant="contact"
-      >
-        <div class="contact-panel">
-          <div class="contact-panel__main">
-            <p class="contact-panel__form-title">Lähetä viesti</p>
+    <div class="contact-band" id="yhteys">
+      <div class="container">
+        <header class="contact-band__head">
+          <p class="eyebrow">Yhteys</p>
+          <h2>{contactCta.title}</h2>
+          <p class="contact-band__sub">{contactCta.support}</p>
+        </header>
+        <div class="contact-band__grid">
+          <div class="contact-band__main">
             <ContactForm turnstileSiteKey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAAA0xEXAMPLE"} />
           </div>
-          <aside class="contact-panel__info">
-            <div class="contact-panel__actions">
+          <aside class="contact-band__aside">
+            <p class="contact-band__aside-title">Suorat kanavat</p>
+            <ul class="contact-band__links">
               {
                 contactCta.links.map((link) => (
-                  <a
-                    class:list={[
-                      "contact-panel__action",
-                      link.key === "A" && "contact-panel__action--active"
-                    ]}
-                    href={link.href}
-                    {...link.external ? { target: "_blank", rel: "noopener noreferrer" } : {}}
-                    {...link.download ? { download: true } : {}}
-                  >
-                    {link.label}
-                    {link.external ? <NewWindowHint /> : null}
-                  </a>
+                  <li>
+                    <a
+                      class="contact-band__link link-external"
+                      href={link.href}
+                      {...link.external ? { target: "_blank", rel: "noopener noreferrer" } : {}}
+                      {...link.download ? { download: true } : {}}
+                    >
+                      {link.label}
+                      {link.external ? <NewWindowHint /> : null}
+                    </a>
+                  </li>
                 ))
               }
-            </div>
-
-            <div class="contact-panel__situations">
-              <p class="contact-panel__situations-title">
-                Millaisissa tilanteissa voin auttaa?
-              </p>
-              <ul class="contact-panel__checklist">
-                <li>WordPress tai WooCommerce hajoaa</li>
-                <li>Integraatio ei liiku</li>
-                <li>Maksut, liidit tai raportointi eivät täsmää</li>
-                <li>Suorituskyky tökkii</li>
-                <li>Kukaan ei enää tiedä, mikä on rikki</li>
-              </ul>
-            </div>
-
-            <div class="contact-panel__note">
-              <p>Vastaan yleensä arkipäivisin. Ei myyntipuhetta ennen kuin näen, mikä on rikki.</p>
-            </div>
+            </ul>
+            <p class="contact-band__note">Vastaan yleensä arkipäivisin. Ei myyntipuhetta ennen kuin näen, mikä on rikki.</p>
           </aside>
         </div>
-        <div class="contact-panel__footer">
-          <span>Vastaan yleensä arkipäivisin.</span>
-          <a href="/tietosuoja" class="contact-panel__footer-link">Tietosuojaseloste</a>
-        </div>
-      </Section>
+      </div>
     </div>
   </main>
 

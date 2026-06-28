@@ -1,7 +1,5 @@
 ---
 import { credibilityBlocks, cvSections, hero, profile } from "../data/profile";
-import ExternalLinkIcon from "./ExternalLinkIcon.astro";
-import NewWindowHint from "./NewWindowHint.astro";
 import QuickFacts from "./QuickFacts.astro";
 import ProfilePhoto from "./ProfilePhoto.astro";
 ---
@@ -9,29 +7,16 @@ import ProfilePhoto from "./ProfilePhoto.astro";
 <header class="hero">
   <div class="hero__layout">
     <div class="hero__content">
-      <p class="eyebrow">{profile.tagline}</p>
+      <p class="eyebrow">{hero.eyebrow}</p>
       <h1>{profile.name}</h1>
       <p class="hero__headline">{hero.headline}</p>
-      <p class="hero__motto">{profile.motto}</p>
-      <p class="hero__lead">{hero.lead}</p>
-      <p class="hero__platform">{hero.platformNote}</p>
+      <p class="hero__lead">{hero.support}</p>
       <div class="actions hero__actions">
         <a class="btn btn--primary" href="#tyonaytteet">Katso työnäytteet</a>
         <a class="btn btn--secondary" href={profile.cvPath} download>
           {cvSections.downloadPdfShort}
         </a>
-        <a
-          class="hero__linkedin link-external"
-          href={profile.linkedin}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          LinkedIn
-          <NewWindowHint />
-          <ExternalLinkIcon />
-        </a>
       </div>
-      <p class="hero__support">{hero.supportLine}</p>
     </div>
 
     <div class="hero__aside">
@@ -43,13 +28,6 @@ import ProfilePhoto from "./ProfilePhoto.astro";
       </div>
     </div>
   </div>
-
-  <figure class="hero__thesis" aria-label="Keskeinen ajatus">
-    <blockquote class="hero__thesis-quote">
-      <p class="hero__thesis-lead">{hero.thesis.lead}</p>
-      <p class="hero__thesis-body">{hero.thesis.body}</p>
-    </blockquote>
-  </figure>
 
   <ul class="credibility-row" aria-label="Luottamuksen perusteet">
     {

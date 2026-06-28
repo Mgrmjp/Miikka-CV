@@ -48,6 +48,7 @@ export const cvSections = {
   eyebrow: "Ansioluettelo",
   experience: "Kokemus",
   clients: "Asiakastyötä",
+  clientsNote: "Teen asiakastyötä Into-Digitalin Huolenpidossa.",
   personal: "Omat projektit",
   personalNote: "Rakennettu ja ylläpidetty työn ulkopuolella.",
   openSite: "Avaa sivusto",
@@ -71,25 +72,38 @@ export const cvSections = {
 } as const;
 
 export const hero = {
-  headline: "Full stack kehittäjä WordPressin vaikeaan päähän.",
-  lead:
-    "Rakennan ja selvitän WordPress-, WooCommerce- ja integraatiopohjaisia verkkopalveluita, joissa pelkkä \"sivuston tekeminen\" ei enää riitä. Liidit, maksut, varainhankinta ja kassavirta kulkee niiden kautta — jokaisen virheen hinnan näkee jossain muussa laskelmassa.",
-  platformNote:
-    "WordPress on usein alusta. Työ on yleensä jotain muuta: integraatioita, dataa, maksupolkuja, suorituskykyä, ylläpitoa, virhetilanteita ja ihmisten työn helpottamista.",
-  thesis: {
-    lead: "Hyvä verkkopalvelu ei ole vain näyttävä etusivu.",
-    body:
-      "Se on hallintapaneeli, joka kestää käytön, integraatio, jonka vika ei jää piiloon, vienti, joka tuo oikeat rivit, ja kehitysympäristö, jonka saa käyntiin ilman rituaalitanssia."
-  },
-  supportLine:
-    "Käytännönläheistä kehitystä, ylläpitoa ja ongelmanratkaisua liiketoimintakriittisiin WordPress-ympäristöihin."
+  eyebrow: "Full stack · WordPress · WooCommerce",
+  headline:
+    "Full stack -kehittäjä WordPressiin, WooCommerceen ja käytännön ongelmanratkaisuun.",
+  support:
+    "Rakennan ja stabiloin verkkopalveluita, joissa liidit, maksut ja data eivät saa hukkata."
 } as const;
+
+export const helpSection = {
+  label: "Tässä autan",
+  title: "Kun WordPress ei ole enää vain sivusto",
+  intro: "Työni on yleensä jotain muuta kuin sivuston tekeminen."
+} as const;
+
+export const helpCards = [
+  {
+    title: "Integraatiot & data",
+    body: "Tuotteet, hinnat, saldot ja tilaukset kulkemaan verkkokaupan ja taustajärjestelmän välillä."
+  },
+  {
+    title: "Maksut & liidit",
+    body: "Stripen, lomakkeiden ja viennin data täsmää ilman käsin tarkistelua."
+  },
+  {
+    title: "Ylläpito & suorituskyky",
+    body: "Tuotanto kestää käytön, julkaisut menevät putkeen ja ongelmat saa kiinni nopeasti."
+  }
+] as const;
 
 export const credibilityBlocks = [
   "5+ vuotta liiketoimintakriittistä WordPress-tuotantoa",
-  "Asiakkaita mm. World Vision Suomi, Burger King Suomi ja Plan Suomi",
-  "Integraatiot, maksut, data ja ylläpito arjen työtä, ei slidessa",
-  "Työni vaikuttaa suoraan liidien, maksujen ja raportoinnin luotettavuuteen"
+  "Into-Digitalilla ylläpidän mm. World Visionin, Burger Kingin ja Planin sivustoja",
+  "Integraatiot, maksut ja data arjen työtä"
 ] as const;
 
 export const proofStrip = {
@@ -158,12 +172,9 @@ export const technicalSkillGroups = [
     label: "AI-työnkulut",
     items: [
       "AI-avusteinen kehitys",
-      "Agenttipohjainen koodaus",
-      "Claude Code, Cursor ja Antigravity",
-      "Gemini CLI, Codex CLI ja PI CLI",
+      "Claude Code ja Cursor",
       "GitHub Copilot ja MCP-työnkulut",
-      "OpenCode, OpenRouter ja mallien vertailu",
-      "Ollama ja paikalliset LLM-kokeilut"
+      "Ollama ja paikalliset LLM:t"
     ]
   }
 ] as const;
@@ -187,11 +198,11 @@ export const stories = [
   {
     title: "Paikallinen kehitys hidasti työtä ja rikkoi rytmin",
     mess:
-      "Projektin käynnistys, tarkistus ja deploy nojasivat muistiin ja käsin tehtyihin askeliin. Sama virhe toistui stagingissa.",
+      "Projektin käynnistys ja deploy nojasivat muistiin ja käsin tehtyihin askeliin. Sama virhe toistui stagingissa.",
     work:
-      "Yhtenäistin Lando- ja WP-CLI-pohjaisia työnkulkuja dry runeilla, varmuuskopioilla ja selkeällä polulla Local → Staging → Tuotanto.",
+      "Yhtenäistin Lando- ja WP-CLI-työnkulut dry runeilla ja selkeällä polulla Local → Staging → Tuotanto.",
     outcome:
-      "Tiimi sai uudet jäsenet nopeammin tuotantoon. Deployjen riski pieneni ja tuotanto-ongelmiin käytetty aika väheni — vähemmän seisokkia, enemmän työrauhaa.",
+      "Uudet jäsenet pääsevät nopeammin tuotantoon ja deployjen riski pieneni.",
     tags: ["Lando", "WP-CLI", "Docker", "Bitbucket Pipelines"]
   },
   {
@@ -199,43 +210,36 @@ export const stories = [
     mess:
       "Stripe, Gravity Forms ja WP All Export eivät aina kertoneet samaa totuutta ennen kuin raportti ajettiin.",
     work:
-      "Selvitin webhook-, merkintä- ja vientiketjun. Rakensin tarkistus- ja korjauslogiikkaa WP-CLI:n kautta, jotta maksetut merkinnät eivät jääneet limboon.",
+      "Selvitin webhook-, merkintä- ja vientiketjun ja rakensin tarkistuslogiikkaa WP-CLI:n kautta.",
     outcome:
-      "Maksudata täsmää nyt Stripen, lomakkeiden ja viennin välillä ilman manuaalista tarkistusta. Tiimi luottaa raportteihin eikä tilityksiä tarvitse enää selvittää käsin.",
+      "Maksudata täsmää Stripen, lomakkeiden ja viennin välillä ilman manuaalista tarkistusta.",
     tags: ["Stripe", "Gravity Forms", "WP-CLI", "WP All Export"]
   },
   {
     title: "Varasto katosi vain tiettyyn aikaan",
     mess:
-      "Tuotteet hävisivät kieliversioista importin jälkeen. Ongelma ilmestyi vain tietyllä kellonajalla, ei satunnaisesti.",
+      "Tuotteet hävisivät kieliversioista importin jälkeen vain tietyllä kellonajalla, ei satunnaisesti.",
     work:
-      "Jäljitin PIM-, kategoria- ja tag-ristiriidat sekä aikavyöhykkeeseen sidotun logiikan. Säädin EN/DE/FI-näkyvyyden importin ympärille.",
+      "Jäljitin PIM-, kategoria- ja tag-ristiriidat sekä aikavyöhykelogiikan importissa.",
     outcome:
-      "Tuotteet pysyvät myynnissä kaikilla kielillä. Importti ei enää piilota varastoa eivätkä asiakkaat saa virheellisiä varastotietoja — vähemmän tukipyyntöjä, enemmän myyntiä.",
+      "Tuotteet pysyvät myynnissä kaikilla kielillä eikä varasto enää katoa importin jälkeen.",
     tags: ["WooCommerce", "WP All Import", "WPML", "PIM"]
   }
 ] as const;
 
 export const about = {
   title: "Tämä ei ole vain WordPressiä",
-  short:
-    "29-vuotias mediatekniikan insinööri. Yli viisi vuotta Into-Digitalin Huolenpidossa. Opin koodaamisen tekemällä ja dokumentoin sen verran, että seuraavalla tekijällä on helpompaa.",
   paragraphs: [
-    "En ole kiinnostunut vain siitä, miltä sivusto näyttää julkisella puolella. Olen kiinnostunut siitä, toimiiko kokonaisuus vielä silloin, kun data liikkuu, asiakkaat ostavat ja joku oikeasti käyttää järjestelmää.",
-    "Arjessa liikun koodin, integraatioiden, tuen ja liiketoiminnan tarpeiden välillä. Usein roolini on selvittää, mikä on rikki, miksi se on rikki ja miten siitä tehdään ylläpidettävämpi ilman uutta teknistä velkaa.",
-    "Uusi ei pelota. Opin tekemällä. AI-työkalut ovat osa arkea, mutta tuotannon totuus ratkaisee aina."
-  ],
-  interestsBlurb:
-    "Vapaa-ajalla: 3D-tulostus, paikallisten LLM:ien säätö ja kokeilu, kaikki tekniikkaan liittyvä, botaniikka ja melkein aina seuraava projekti on jo suunnitteilla. Musiikki inspiroi, ja teen sitä myös itse, usein AI:n avulla, koska soittimen opetteluun ei juuri nyt riitä aikaa."
+    "29-vuotias mediatekniikan insinööri ja yli viisi vuotta Into-Digitalin Huolenpidossa. Opin koodaamalla ja dokumentoin sen verran, että seuraavalla tekijällä on helpompaa.",
+    "Liikun koodin, integraatioiden ja liiketoiminnan tarpeiden välillä. Usein roolini on selvittää, mikä on rikki ja miten siitä tehdään ylläpidettävämpi ilman uutta teknistä velkaa."
+  ]
 } as const;
 
 export const interests = [
   "3D-tulostus",
   "Paikalliset LLM:t",
   "Musiikki",
-  "Tekniikka",
-  "Botaniikka",
-  "Seuraava projekti"
+  "Botaniikka"
 ] as const;
 
 export const experiences = [
@@ -246,10 +250,9 @@ export const experiences = [
     period: "helmi 2021 –",
     location: "Jyväskylä",
     bullets: [
-      "Rakennan ja ylläpidän tuotannon WordPress- ja WooCommerce-palveluita ACF:n, WP-CLI:n, LiteSpeedin ja API-integraatioiden kanssa.",
-      "Parannan luotettavuutta staging-käytännöillä, debuggausrutiineilla, automaatioskripteillä ja selkeällä dokumentaatiolla.",
-      "Tuettavia asiakaskriittisiä sivustoja ovat mm. World Vision Suomi, Burger King Suomi ja Plan Suomi.",
-      "Työni vaikuttaa suoraan siihen, että liidit, maksut ja raportointi kulkee oikein — jokainen korjaus näkyy jossain muussa laskelmassa."
+      "Rakennan ja ylläpidän tuotannon WordPress- ja WooCommerce-palveluita ACF:n, WP-CLI:n ja API-integraatioiden kanssa.",
+      "Parannan luotettavuutta staging-käytännöillä, debuggausrutiineilla ja automaatioskripteillä.",
+      "Työskentelen mm. World Vision Suomen, Burger King Suomen ja Plan Suomen parissa."
     ]
   },
   {
@@ -278,23 +281,23 @@ export const personalProjects = [
     url: "https://suomalaisetnhlssa.fi/",
     hostname: "suomalaisetnhlssa.fi",
     description:
-      "Suomalaisten NHL-pelaajien seuranta yhdestä paikasta: ottelukohtaiset maalit, syötöt, pisteet ja peliaika. Tiedot tulevat NHL:n virallisista lähteistä ja päivittyvät myös pelien aikana.",
-    tags: ["NHL API", "Live-tilastot", "Data"]
+      "Suomalaisten NHL-pelaajien seuranta yhdestä paikasta: ottelukohtaiset maalit, syötöt ja pisteet, päivittyvät pelien aikana.",
+    tags: ["NHL API", "Live-data", "WordPress"]
   },
   {
     name: "Waves Jyväskylä",
     url: "https://wavesdemo.koubou.eu/",
     hostname: "wavesdemo.koubou.eu",
     description:
-      "Konttiravintola Wavesin sivusto Jyväskylän satamassa: ruokalista, lounas, tapahtumat, aukioloajat ja yhteystiedot. Kaksikielinen sivusto (fi/en).",
-    tags: ["Ravintola", "Monikielinen", "SEO"]
+      "Konttiravintola Wavesin kaksikielinen sivusto Jyväskylän satamassa: ruokalista, tapahtumat ja yhteystiedot.",
+    tags: ["Monikielinen", "Ravintola", "WordPress"]
   },
   {
     name: "Lukko kokoonpano",
     url: "https://lukkokokoonpano.koubou.eu/",
     hostname: "lukkokokoonpano.koubou.eu",
     description:
-      "Rauman Lukon fanityökalu: hyökkäysketjut, puolustajaparit, ylivoimat, alivoimat ja ottelupäivän kokoonpano (13F / 7D) yhdessä näkymässä.",
+      "Rauman Lukon fanityökalu: hyökkäysketjut, puolustajaparit ja ottelupäivän kokoonpano yhdessä näkymässä.",
     tags: ["Liiga", "Fanityökalu", "UI"]
   }
 ] as const;
@@ -409,13 +412,14 @@ export const rinkPlays = [
 ] as const;
 
 export const contactCta = {
-  offer:
-    "Jos sulla on WordPress- tai WooCommerce-kokonaisuus, jossa liidit, maksut tai raportointi eivät täsmää, ota yhteyttä. Tai jos integraatiot hidastavat, suorituskyky tökkii tai kukaan ei enää tiedä, mikä on rikki. Katsotaan ensin, voinko auttaa.",
+  title: "Kerro, mikä sotku siellä on",
+  support:
+    "Selvitetään nopeasti, onko tässä jotain, missä voin auttaa.",
   links: [
     { key: "A", label: "Sähköposti", href: `mailto:${profile.email}` },
     { key: "B", label: "LinkedIn", href: profile.linkedin, external: true },
     { key: "C", label: "GitHub", href: profile.github, external: true },
-    { key: "D", label: "Lataa CV (PDF)", href: profile.cvPath, download: true }
+    { key: "D", label: "CV (PDF)", href: profile.cvPath, download: true }
   ]
 } as const;
 
