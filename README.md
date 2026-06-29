@@ -103,13 +103,31 @@ Screenshots go to `.qa-screenshots/` (gitignored).
 
 ## Deploy
 
-Static site after `npm run build`. Upload `dist/` to your host or connect the repo to Netlify / Cloudflare Pages / GitHub Pages with:
+Cloudflare Workers project (@astrojs/cloudflare adapter). Pushing to `main`
+triggers the GitHub Action (`.github/workflows/deploy.yml`), which builds and
+runs `wrangler deploy`.
 
-- **Build command:** `npm run build`
-- **Output directory:** `dist`
-- **Node version:** 20+
+Manual deploy:
+
+```sh
+npm run deploy
+```
+
+`npm run deploy` runs `astro build` then
+`wrangler deploy --config dist/server/wrangler.json` (the adapter-generated
+config carries `main`, assets, routes and D1/KV/Images bindings).
+
+The CI deploy needs a `CLOUDFLARE_API_TOKEN` repo secret (account
+`4999371d4aa64b5dd7c09d2568f5115b`) with these scopes:
+
+- Account · Workers Scripts · Edit
+- Account · Workers KV Storage · Edit
+- Account · D1 · Edit
+- Account · Cloudflare Images · Edit
+- Zone · Workers Routes · Edit (zone: `miikkama.work`)
 
 Set production URL in `astro.config.mjs` (`site`) if the domain changes.
+
 
 ## License
 

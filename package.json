@@ -7,6 +7,7 @@
     "dev": "astro dev --host 127.0.0.1",
     "build": "astro build",
     "preview": "astro preview --host 127.0.0.1",
+    "deploy": "astro build && wrangler deploy --config dist/server/wrangler.json",
     "cv:pdf": "node scripts/generate-cv-pdf.mjs",
     "assets:lqip": "node scripts/generate-lqip.mjs"
   },
